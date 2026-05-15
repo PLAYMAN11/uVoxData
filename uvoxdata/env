@@ -1,0 +1,6 @@
+OPENAI_API_KEY=sk-...
+BACKEND_URL=http://localhost:8001
+RAG_URL=http://localhost:8002
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
