@@ -11,6 +11,7 @@ services:
       - APP_KEY=base64:v2Y/RPBQ6J/xDnTYoIuCZnZCptOOZhPOjC9yY30wvzI=
       - APP_URL=http://localhost:8000
       - BACKEND_URL=http://backend:8001
+      - SESSION_DRIVER=file
     depends_on:
       - backend
     volumes:
@@ -33,6 +34,9 @@ services:
     build: ./rag
     ports:
       - "8002:8002"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_MODEL=${GROQ_MODEL:-llama-3.3-70b-versatile}
     volumes:
       - ./rag/chroma_db:/app/chroma_db
       - ./rag/docs_oficiales:/app/docs_oficiales
