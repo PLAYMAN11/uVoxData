@@ -7,7 +7,12 @@ from Services.ingest_service import ingestar_docs_oficiales
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    ingestar_docs_oficiales()
+    try:
+        print(">> Iniciando indexado de docs_oficiales...")
+        resultado = ingestar_docs_oficiales()
+        print(f">> Docs indexados: {resultado}")
+    except Exception as e:
+        print(f">> ERROR en lifespan: {type(e).__name__}: {e}")
     yield
 
 
