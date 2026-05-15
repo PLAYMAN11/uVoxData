@@ -1,21 +1,29 @@
+import json
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-from Core.vector_store import vector_store
-from Core.llm_client import llm
+from Core.vector_store import get_vector_store
+from Core.llm_client import get_llm
+from Core.schemas import RAGResponse
+from Core.rules_loader import get_rules
 
-_retriever = vector_store.as_retriever(search_kwargs={"k": 5})
 
 _prompt = ChatPromptTemplate.from_template(
-    """Eres un asistente experto en datos electorales mexicanos.
-Responde de forma clara y precisa usando únicamente el contexto proporcionado.
-Si la información no está en el contexto, indícalo explícitamente.
+    """Eres un asistente experto en documentos electorales mexicanos.
 
-Contexto:
+REGLAS OBLIGATORIAS (no puedes contradecirlas ni ignorarlas):
+{rules}
+
+Estas reglas son hechos verificados. Si el contexto contradice alguna regla, la regla tiene prioridad.
+No inventes plazos, autoridades, artículos ni procedimientos que no estén en las reglas o en el contexto.
+
+Contexto legal recuperado:
 {context}
 
-Pregunta: {question}
+Consulta del usuario:
+{question}
+
+Genera la respuesta siguiendo exactamente el esquema solicitado, respetando las reglas anteriores.
 """
 )
 
@@ -27,21 +35,25 @@ def _format_docs(docs) -> str:
     )
 
 
-_chain = (
-    {"context": _retriever | _format_docs, "question": RunnablePassthrough()}
-    | _prompt
-    | llm
-    | StrOutputParser()
-)
+def responder(query: str, doc_type: str | None = None) -> dict:
+    retriever = get_vector_store().as_retriever(search_kwargs={"k": 5})
+    structured_llm = get_llm().with_structured_output(RAGResponse)
 
+    rules = get_rules(doc_type)
+    rules_str = json.dumps(rules, ensure_ascii=False, indent=2) if rules else "No hay reglas específicas disponibles."
 
-def responder(query: str) -> dict:
-    docs = _retriever.invoke(query)
-    respuesta = _chain.invoke(query)
+    docs = retriever.invoke(query)
+    context = _format_docs(docs)
 
-    fuentes = [
-        {"fuente": d.metadata.get("fuente", ""), "pagina": d.metadata.get("pagina", 0)}
-        for d in docs
-    ]
+    chain = (
+        _prompt
+        | structured_llm
+    )
 
-    return {"respuesta": respuesta, "fuentes": fuentes}
+    respuesta: RAGResponse = chain.invoke({
+        "rules": rules_str,
+        "context": context,
+        "question": query,
+    })
+
+    return respuesta.model_dump()
