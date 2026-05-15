@@ -1,0 +1,46 @@
+{
+  "status": {
+    "priority": "requiere_atencion",
+    "headline": "Actúa antes del 17 de abril de 2026",
+    "remaining_time": "Tienes 3 días"
+  },
+
+  "document": {
+    "type": "Cédula de notificación",
+    "expedient": "JDC-013/2026",
+    "authority": "TEPJF"
+  },
+
+  "orientation": {
+    "why_you_received_this":
+      "Existe un procedimiento relacionado contigo y hay un plazo activo.",
+
+    "risk_if_no_action":
+      "Esperar puede limitar tus opciones legales o impedir que tu caso sea atendido.",
+
+    "what_you_can_do_now": [
+      "Revisar fechas importantes del documento",
+      "Identificar documentación relacionada",
+      "Preparar una posible respuesta antes de la fecha límite"
+    ]
+  },
+
+  "clarity_support": {
+    "message":
+      "Lo más importante es no dejar pasar el plazo.",
+
+    "cta_primary": "Entendí",
+    "cta_secondary": "Quiero entender mejor"
+  },
+
+  "confidence": {
+    "status": "high",
+    "message":
+      "Se identificó una fecha límite y un procedimiento electoral relacionado."
+  },
+
+  "system": {
+    "source": "groq_rag",
+    "mode": "online"
+  }
+}
