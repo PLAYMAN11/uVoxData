@@ -6,11 +6,16 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:v2Y/RPBQ6J/xDnTYoIuCZnZCptOOZhPOjC9yY30wvzI=
+      - APP_URL=http://localhost:8000
       - BACKEND_URL=http://backend:8001
     depends_on:
       - backend
     volumes:
-      - ./frontend:/var/www/html
+      - ./frontend/storage:/var/www/html/storage
+      - ./frontend/bootstrap/cache:/var/www/html/bootstrap/cache
 
   backend:
     build: ./backend
