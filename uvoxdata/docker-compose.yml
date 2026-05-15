@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8000:8000"
+    environment:
+      - BACKEND_URL=http://backend:8001
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/var/www/html
+
+  backend:
+    build: ./backend
+    ports:
+      - "8001:8001"
+    environment:
+      - RAG_URL=http://rag:8002
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - rag
+    volumes:
+      - ./backend:/app
+
+  rag:
+    build: ./rag
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./rag/chroma_db:/app/chroma_db
+      - ./rag/docs_oficiales:/app/docs_oficiales
+
+networks:
+  default:
+    name: uvoxdata_network
