@@ -1,5 +1,65 @@
 [
   {
+    "id": "consultar-en-linea-recomendacion",
+    "palabras_clave": [
+      "no se",
+      "no puedo",
+      "offline",
+      "internet",
+      "conectarme",
+      "limitacion",
+      "fecha",
+      "casilla",
+      "donde votar"
+    ],
+    "respuesta": "Modo offline (limitado): sin Internet solo puedo responder con el catálogo precargado. Para cosas que cambian (fechas, ubicaciones de casillas, módulos, estados de trámite, criterios actualizados), es mejor conectarte y consultar fuentes oficiales. Si tu pregunta depende de un dato que no está precargado, te diré que no está disponible offline.",
+    "fuentes": ["INE", "TEPJF"]
+  },
+  {
+    "id": "glosario-basico",
+    "palabras_clave": [
+      "glosario",
+      "terminos",
+      "que significa",
+      "plazo",
+      "notificacion",
+      "acto",
+      "impugnacion",
+      "autoridad"
+    ],
+    "respuesta": "Glosario básico (offline):\n\n- Plazo: tiempo límite para realizar un acto (presentar un escrito, impugnar, etc.).\n- Notificación: acto por el cual una autoridad te comunica formalmente una determinación.\n- Autoridad competente: la institución que legalmente puede atender/resolver tu asunto.\n- Medio de impugnación: vía legal para controvertir un acto o resolución ante la autoridad/jurisdicción correspondiente.\n\nSi tu pregunta requiere fechas, requisitos exactos o casos particulares, en modo offline es mejor conectarte a Internet o acudir a la autoridad competente.",
+    "fuentes": ["INE", "TEPJF"]
+  },
+  {
+    "id": "impugnacion-cedula-notificacion",
+    "palabras_clave": [
+      "cedula",
+      "notificacion",
+      "impugnacion",
+      "plazo",
+      "medio de impugnacion",
+      "lgsmime",
+      "articulo 8",
+      "tribunal"
+    ],
+    "respuesta": "Modo offline (limitado): este caso usa un ejemplo precargado de reglas. Para no inventar, confirma siempre el fundamento y el cómputo del plazo en tu notificación y en la autoridad competente. Si tienes Internet, consulta el comparador online para una respuesta más contextual.",
+    "fuentes": ["TEPJF", "LGSMIME (Cámara de Diputados)"]
+  },
+  {
+    "id": "ubicar-autoridad",
+    "palabras_clave": [
+      "autoridad",
+      "competente",
+      "donde",
+      "tribunal",
+      "ine",
+      "instituto electoral",
+      "a quien acudir"
+    ],
+    "respuesta": "Guía offline: si tu asunto es sobre credencial para votar o padrón, normalmente inicia en INE. Si es una impugnación de acto/resolución, revisa la vía de medio de impugnación ante la autoridad/tribunal que corresponda. Si es una queja/denuncia, busca el canal oficial del INE/OPLE/autoridad competente. En modo offline no puedo confirmar la autoridad exacta; conecta a Internet para ubicar oficinas y vías formales.",
+    "fuentes": ["INE", "TEPJF"]
+  },
+  {
     "id": "plazo_impugnacion",
     "palabras_clave": ["plazo", "impugnar", "impugnación", "días"],
     "respuesta": "Según la LGSMIME, el plazo general para interponer un medio de impugnación es de 4 días contados a partir del día siguiente a aquel en que se tenga conocimiento del acto o resolución impugnado (Art. 8).",
