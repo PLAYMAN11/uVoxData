@@ -1,0 +1,20 @@
+[
+  {
+    "id": "plazo_impugnacion",
+    "palabras_clave": ["plazo", "impugnar", "impugnación", "días"],
+    "respuesta": "Según la LGSMIME, el plazo general para interponer un medio de impugnación es de 4 días contados a partir del día siguiente a aquel en que se tenga conocimiento del acto o resolución impugnado (Art. 8).",
+    "fuentes": ["LGSMIME Art. 8"]
+  },
+  {
+    "id": "juicio_revision_constitucional",
+    "palabras_clave": ["jrc", "juicio de revisión", "revisión constitucional"],
+    "respuesta": "El Juicio de Revisión Constitucional Electoral (JRC) procede para impugnar actos o resoluciones de las autoridades electorales locales que violen normas constitucionales. Solo puede ser promovido por partidos políticos (LGSMIME Art. 86).",
+    "fuentes": ["LGSMIME Art. 86-94"]
+  },
+  {
+    "id": "recurso_apelacion",
+    "palabras_clave": ["recurso de apelación", "apelación", "rap"],
+    "respuesta": "El recurso de apelación es el medio para impugnar actos o resoluciones del INE, la Fepade o el Secretario Ejecutivo del INE. El plazo para interponerlo es de 4 días (LGSMIME Art. 40-50).",
+    "fuentes": ["LGSMIME Art. 40-50"]
+  }
+]
