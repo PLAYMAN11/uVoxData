@@ -26,7 +26,7 @@
       "https://www.ine.mx",
       "https://www.te.gob.mx"
     ],
-    "respuesta": "Modo offline (limitado): sin Internet solo puedo responder con el catálogo precargado. Para cosas que cambian (fechas, ubicaciones de casillas, módulos, estados de trámite, criterios actualizados), es mejor conectarte y consultar fuentes oficiales. Si tu pregunta depende de un dato que no está precargado, te diré que no está disponible offline."
+    "respuesta": "Modo offline (limitado): sin Internet solo respondo con el catálogo precargado. Para fechas, ubicaciones y estados de trámite conviene conectarse y consultar fuentes oficiales."
   },
   "sources": [
     { "label": "INE", "url": "https://www.ine.mx" },

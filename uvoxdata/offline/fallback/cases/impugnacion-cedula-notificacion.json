@@ -30,15 +30,15 @@
     "tipo_doc": "cédula_notificación",
     "autoridad_competente": "Tribunal Electoral (según el caso y la autoridad responsable)",
     "ruta_sugerida": "Interponer un medio de impugnación",
-    "tramite": "Presentar el medio de impugnación ante la autoridad responsable o el tribunal competente (según aplique).",
+    "tramite": "Presentar el medio de impugnación ante la autoridad responsable o el tribunal competente.",
     "modalidad": "Presencial o en línea (depende de la autoridad competente)",
-    "plazo": "Ejemplo precargado: 4 días contados a partir del día siguiente de la notificación (verifica tu caso).",
-    "consecuencias": "Si se presenta fuera de plazo, el acto puede quedar firme (según el caso).",
+    "plazo": "Ejemplo precargado: 4 días contados a partir del día siguiente de la notificación; verifica tu caso.",
+    "consecuencias": "Si se presenta fuera de plazo, el acto puede quedar firme.",
     "links_oficiales": [
       "https://www.te.gob.mx",
       "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSMIME.pdf"
     ],
-    "respuesta": "Modo offline (limitado): este caso usa un ejemplo precargado de reglas. Para no inventar, confirma siempre el fundamento y el cómputo del plazo en tu notificación y en la autoridad competente. Si tienes Internet, consulta el comparador online para una respuesta más contextual."
+    "respuesta": "Modo offline (limitado): usa este caso como referencia general. Confirma el cómputo del plazo en tu notificación y con la autoridad competente. Si tienes Internet, consulta el comparador online."
   },
   "sources": [
     { "label": "TEPJF", "url": "https://www.te.gob.mx" },

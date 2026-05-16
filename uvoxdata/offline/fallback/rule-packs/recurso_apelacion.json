@@ -1,0 +1,21 @@
+{
+  "id": "recurso_apelacion",
+  "doc_type": "acto_o_resolucion_ine",
+  "proceso": "recurso_apelacion",
+  "reglas": {
+    "plazo_dias": 4,
+    "inicio_plazo": "dia_siguiente_notificacion",
+    "fundamento": "Articulos 40 a 50 LGSMIME",
+    "consecuencia_fuera_plazo": "acto_firme"
+  },
+  "autoridad_default": "Tribunal Electoral",
+  "ruta_default": "Interponer recurso de apelacion",
+  "tramite": {
+    "tipo": "presencial",
+    "descripcion": "Presentar el recurso de apelacion ante la autoridad responsable o ante el tribunal electoral competente"
+  },
+  "links_oficiales": [
+    "https://www.te.gob.mx",
+    "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSMIME.pdf"
+  ]
+}

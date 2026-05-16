@@ -12,7 +12,7 @@
     "impugnacion",
     "autoridad"
   ],
-  "summary": "Definiciones cortas y prudentes de términos comunes. No sustituye asesoría legal.",
+  "summary": "Definiciones cortas y prudentes de términos comunes; no sustituye la consulta directa con la autoridad competente.",
   "output": {
     "tipo_doc": "",
     "autoridad_competente": "",
@@ -25,7 +25,7 @@
       "https://www.ine.mx",
       "https://www.te.gob.mx"
     ],
-    "respuesta": "Glosario básico (offline):\n\n- Plazo: tiempo límite para realizar un acto (presentar un escrito, impugnar, etc.).\n- Notificación: acto por el cual una autoridad te comunica formalmente una determinación.\n- Autoridad competente: la institución que legalmente puede atender/resolver tu asunto.\n- Medio de impugnación: vía legal para controvertir un acto o resolución ante la autoridad/jurisdicción correspondiente.\n\nSi tu pregunta requiere fechas, requisitos exactos o casos particulares, en modo offline es mejor conectarte a Internet o acudir a la autoridad competente."
+    "respuesta": "Glosario breve: plazo es el tiempo límite para actuar; notificación es la comunicación formal de una autoridad; autoridad competente es la institución que puede atender tu asunto; medio de impugnación es la vía para controvertir un acto. Para casos puntuales, verifica en línea."
   },
   "sources": [
     { "label": "INE", "url": "https://www.ine.mx" },

@@ -2,6 +2,13 @@
   "synonyms": [
     { "from": "tee", "to": "tribunal electoral" },
     { "from": "tepjf", "to": "tribunal electoral" },
-    { "from": "ine", "to": "instituto nacional electoral" }
+    { "from": "ine", "to": "instituto nacional electoral" },
+    { "from": "ople", "to": "organismo publico local electoral" },
+    { "from": "jrc", "to": "juicio de revision constitucional" },
+    { "from": "rap", "to": "recurso de apelacion" },
+    { "from": "lgsmime", "to": "ley general del sistema de medios de impugnacion en materia electoral" },
+    { "from": "cedula", "to": "cedula de notificacion" },
+    { "from": "notificacion", "to": "notificacion formal" },
+    { "from": "impugnar", "to": "interponer medio de impugnacion" }
   ]
 }
