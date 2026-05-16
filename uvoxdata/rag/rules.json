@@ -2,7 +2,7 @@
   {
     "doc_type": "cedula_notificacion",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Si no está explícita, no inventar.",
+      "fecha_limite": "Extraer del documento. Puede ser una fecha absoluta (ej. '20 de mayo de 2026') O un plazo relativo (ej. '4 días hábiles', 'tres días naturales a partir de la notificación'). Ambos son válidos. Solo usar 'No se encontró' si no hay ninguna mención de fecha ni plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_emisora": "Extraer de la firma o membrete del documento."
     },
@@ -112,7 +112,7 @@
   {
     "doc_type": "juicio_ciudadano",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Si no está explícita, no inventar.",
+      "fecha_limite": "Extraer del documento. Puede ser una fecha absoluta (ej. '20 de mayo de 2026') O un plazo relativo (ej. '4 días hábiles', 'tres días naturales a partir de la notificación'). Ambos son válidos. Solo usar 'No se encontró' si no hay ninguna mención de fecha ni plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_responsable": "Extraer la autoridad contra la que se promueve el juicio.",
       "acto_impugnado": "Extraer el acto o resolución que se impugna."
@@ -139,7 +139,7 @@
   {
     "doc_type": "recurso_apelacion",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Si no está explícita, no inventar.",
+      "fecha_limite": "Extraer del documento. Puede ser una fecha absoluta (ej. '20 de mayo de 2026') O un plazo relativo (ej. '4 días hábiles', 'tres días naturales a partir de la notificación'). Ambos son válidos. Solo usar 'No se encontró' si no hay ninguna mención de fecha ni plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_responsable": "Extraer la autoridad que emitió el acto impugnado.",
       "acto_impugnado": "Extraer el acto o resolución que se impugna."
@@ -166,7 +166,7 @@
   {
     "doc_type": "recurso_revision",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Si no está explícita, no inventar.",
+      "fecha_limite": "Extraer del documento. Puede ser una fecha absoluta (ej. '20 de mayo de 2026') O un plazo relativo (ej. '4 días hábiles', 'tres días naturales a partir de la notificación'). Ambos son válidos. Solo usar 'No se encontró' si no hay ninguna mención de fecha ni plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_responsable": "Extraer la autoridad que emitió el acto impugnado.",
       "acto_impugnado": "Extraer el acto o resolución que se impugna."
