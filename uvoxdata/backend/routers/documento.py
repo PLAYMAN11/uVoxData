@@ -13,6 +13,24 @@ RAG_URL = os.getenv("RAG_URL", "http://rag:8002")
 _TIPOS_ACEPTADOS = _TIPOS_PDF | _TIPOS_IMAGEN
 
 
+@router.post("/documento/debug")
+async def debug_ocr(archivo: UploadFile = File(...)):
+    """Devuelve el texto extraído por OCR sin mandarlo al RAG."""
+    tmp_path = None
+    try:
+        suffix = Path(archivo.filename).suffix if archivo.filename else ".bin"
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(await archivo.read())
+            tmp_path = tmp.name
+        texto = extraer_texto(tmp_path, archivo.content_type)
+        return {"texto_extraido": texto, "caracteres": len(texto)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+
+
 @router.post("/documento")
 async def subir_documento(archivo: UploadFile = File(...)):
     if archivo.content_type not in _TIPOS_ACEPTADOS:
