@@ -34,21 +34,24 @@ def _ocr_pdf_escaneado(ruta: Path) -> str:
 
 
 def extraer_texto_pdf(ruta: Path) -> str:
-    """Extrae texto de un PDF: texto nativo primero, OCR como fallback."""
-    partes = []
+    """Extrae texto de un PDF combinando pdfplumber y OCR para mayor precisión."""
+    partes_plumber = []
 
     with pdfplumber.open(ruta) as pdf:
         for pagina in pdf.pages:
             texto = (pagina.extract_text() or "").strip()
-            partes.append(texto)
+            partes_plumber.append(texto)
 
-    texto = "\n\n".join(p for p in partes if p)
+    texto_plumber = "\n\n".join(p for p in partes_plumber if p)
 
-    if not texto.strip():
-        print(">> PDF sin texto nativo, aplicando OCR con preprocesamiento...")
-        texto = _ocr_pdf_escaneado(ruta)
+    # Siempre correr OCR también para capturar lo que pdfplumber pierda
+    print(">> Aplicando OCR para complementar extracción...")
+    texto_ocr = _ocr_pdf_escaneado(ruta)
 
-    return texto.strip()
+    # Combinar ambos — OCR como fuente principal si pdfplumber dio resultado corto
+    if len(texto_ocr) > len(texto_plumber):
+        return texto_ocr.strip()
+    return (texto_plumber + "\n\n" + texto_ocr).strip()
 
 
 def extraer_texto_imagen(ruta: Path) -> str:
