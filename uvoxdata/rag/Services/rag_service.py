@@ -32,11 +32,14 @@ REGLAS OBLIGATORIAS (no puedes contradecirlas ni ignorarlas):
 Estas reglas son hechos verificados. Si el contexto contradice alguna regla, la regla tiene prioridad.
 No inventes plazos, autoridades, artículos ni procedimientos que no estén en las reglas o en el contexto.
 
-VALORES POR DEFECTO cuando no encuentres la información en el documento:
+VALORES POR DEFECTO cuando no encuentres la información ni en la consulta ni en el contexto:
 - Fechas o plazos: "No se encontró"
 - Expediente: "No se encontró"
 - Autoridad: "No se encontró"
 - Cualquier otro campo desconocido: "No se encontró"
+
+IMPORTANTE: Extrae información tanto de la consulta del usuario como del contexto legal recuperado.
+Si el usuario menciona una fecha, expediente o autoridad en su consulta, úsala directamente.
 
 Contexto legal recuperado:
 {context}
