@@ -1,26 +1,55 @@
-import httpx
 import os
-
+import tempfile
+from pathlib import Path
+import httpx
 from fastapi import APIRouter, UploadFile, File, HTTPException
+
+from services.ocr_service import extraer_texto, _TIPOS_PDF, _TIPOS_IMAGEN
 
 router = APIRouter()
 
 RAG_URL = os.getenv("RAG_URL", "http://rag:8002")
 
+_TIPOS_ACEPTADOS = _TIPOS_PDF | _TIPOS_IMAGEN
+
 
 @router.post("/documento")
 async def subir_documento(archivo: UploadFile = File(...)):
-    if archivo.content_type != "application/pdf":
-        raise HTTPException(status_code=400, detail="Solo se aceptan archivos PDF.")
-
-    contenido = await archivo.read()
-    async with httpx.AsyncClient(timeout=60) as client:
-        resp = await client.post(
-            f"{RAG_URL}/ingest",
-            files={"archivo": (archivo.filename, contenido, "application/pdf")},
+    if archivo.content_type not in _TIPOS_ACEPTADOS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Tipo no soportado: {archivo.content_type}. Se aceptan PDF e imágenes (JPG, PNG, WEBP, HEIC)."
         )
 
-    if resp.is_error:
-        raise HTTPException(status_code=502, detail="Error al indexar el documento.")
+    tmp_path = None
+    try:
+        suffix = Path(archivo.filename).suffix if archivo.filename else ".bin"
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(await archivo.read())
+            tmp_path = tmp.name
 
-    return resp.json()
+        texto = extraer_texto(tmp_path, archivo.content_type)
+
+        if not texto:
+            raise HTTPException(status_code=422, detail="No se pudo extraer texto del archivo.")
+
+        async with httpx.AsyncClient(timeout=60) as client:
+            resp = await client.post(
+                f"{RAG_URL}/ingest",
+                json={"texto": texto, "fuente": archivo.filename},
+            )
+
+        if resp.is_error:
+            raise HTTPException(status_code=502, detail="Error al indexar el documento en el RAG.")
+
+        return resp.json()
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al procesar el archivo: {str(e)}")
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
+
+
