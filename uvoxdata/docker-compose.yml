@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   frontend:
     build: ./frontend
@@ -11,11 +9,13 @@ services:
       - APP_KEY=base64:v2Y/RPBQ6J/xDnTYoIuCZnZCptOOZhPOjC9yY30wvzI=
       - APP_URL=http://localhost:8000
       - BACKEND_URL=http://backend:8001
+      - SESSION_DRIVER=file
     depends_on:
       - backend
     volumes:
-      - ./frontend/storage:/var/www/html/storage
-      - ./frontend/bootstrap/cache:/var/www/html/bootstrap/cache
+        - ./frontend:/var/www/html
+        - frontend_vendor:/var/www/html/vendor
+        - frontend_node:/var/www/html/node_modules
 
   backend:
     build: ./backend
@@ -40,3 +40,7 @@ services:
 networks:
   default:
     name: uvoxdata_network
+
+volumes:
+  frontend_vendor:
+  frontend_node:

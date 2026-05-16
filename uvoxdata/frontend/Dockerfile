@@ -8,22 +8,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Instalar dependencias PHP
 COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader --prefer-dist
+RUN composer install --no-interaction --prefer-dist
 
-# Instalar dependencias JS
 COPY package.json package-lock.json* ./
 RUN npm install
 
-# Copiar el resto del código
 COPY . .
 
-RUN composer dump-autoload --optimize
-RUN npm run build
-
-# Generar APP_KEY si no existe ..env
-RUN php artisan key:generate --force 2>/dev/null || true
+RUN composer dump-autoload
 
 EXPOSE 8000
 
