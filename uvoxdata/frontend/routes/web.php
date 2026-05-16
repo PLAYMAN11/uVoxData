@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -9,88 +10,53 @@ Route::get('/', function () {
 })->name('home');
 
 
-/* ────────────── CONSULTA FLUJO ──────────────────────── */
+/* ────────────── CONSULTA — FLUJO DOCUMENTO ──────────── */
 
-// Pantalla donde subes documento
+// Paso 2 — ¿tienes el documento?
 Route::get('/consulta/documento', function () {
     return view('consulta.documento');
 })->name('consulta.documento');
 
+// Subir documento — wizard (mapea respuesta RAG al formato resultado)
+Route::post('/consulta/subir', [ConsultaController::class, 'subirOrientacionDocumento'])->name('consulta.subir');
 
-// Endpoint upload (fetch)
-Route::post('/consulta/subir', function (Request $request) {
+// Proxy Laravel → FastAPI (api.js / integraciones)
+Route::post('/consulta', [ConsultaController::class, 'consultar'])->name('consulta.ia');
+Route::post('/documento', [ConsultaController::class, 'subirDocumento'])->name('documento.ia');
 
-    return response()->json([
-        'ok' => true,
-        'mensaje' => 'archivo recibido',
-        'tipo' => $request->file('archivo')?->getClientOriginalExtension()
-    ]);
-
-})->name('consulta.subir');
-
-
-// Pantalla donde escribes descripción
+// Paso 3 — describir situación sin documento
 Route::get('/consulta/descripcion', function () {
     return view('consulta.descripcion');
 })->name('consulta.descripcion');
 
+// Describir — wizard (mapea ConsultaResponse al formato resultado)
+Route::post('/consulta/describir', [ConsultaController::class, 'describirOrientacion'])->name('consulta.describir');
 
-// API: procesar descripción
-Route::post('/consulta/describir', function (Request $request) {
+// Pantalla intermedia de procesamiento (solo vista)
+Route::view('/consulta/procesando', 'procesando')->name('consulta.procesando');
 
-    return response()->json([
-        'ok' => true,
-        'resultado' => [
-            'documento_tipo' => 'Demo',
-            'autoridad' => 'Sistema',
-            'urgencia' => 'media',
-            'acciones' => [
-                'Revisar documento',
-                'Acudir a asesoría',
-                'Responder antes del plazo'
-            ],
-            'por_que_lo_recibiste' => 'Caso simulado para prueba del flujo',
-            'consecuencias' => 'Puede generar sanciones si no respondes',
-            'fecha_limite_texto' => '30 de mayo',
-            'fecha_limite_iso' => '2026-05-30'
-        ]
-    ]);
-
-})->name('consulta.describir');
-
-
-// Resultado
+// Resultado del análisis
 Route::get('/consulta/resultado', function () {
     return view('resultado');
 })->name('consulta.resultado');
 
-/* ────────URGENCIA ─────────────────── */
+// Orientación por temas + chat conversacional (POST /consulta vía api.js)
+Route::view('/consulta/chat', 'chat')->name('consulta.chat');
 
+
+/* ────────────────── URGENCIA ──────────────────── */
+
+// Paso 1 — ¿qué describe mejor tu situación?
 Route::get('/urgencia/documento', function () {
     return view('urgencia.modo');
 })->name('urgencia.documento');
 
-Route::get('/emergencia/urgente', function () {
-    return view('consulta.documento');
-})->name('emergencia.urgente');
-
-Route::get('/emergencia/violentaron', function () {
-    return view('consulta.documento');
-})->name('emergencia.violentaron');
-
-Route::get('/emergencia/no-se', function () {
-    return view('consulta.documento');
-})->name('emergencia.no-se');
-
-Route::post('/emergencia/set', function (\Illuminate\Http\Request $request) {
+// Guarda el modo en sesión (consumido por el wizard)
+Route::post('/emergencia/set', function (Request $request) {
     session(['emergencia_tipo' => $request->tipo]);
     return response()->json(['ok' => true]);
 })->name('emergencia.set');
 
-Route::get('/urgencia/emergencia-doc', function () {
-    return view('urgencia.emergencia-doc');
-})->name('urgencia.emergencia-doc');
-/* ─────────────────────────────
- | DEMO
-───────────────────────────── */
+
+/* ─────────────────── DEMO ─────────────────── */
 Route::get('/demo', fn () => view('demo'))->name('demo');

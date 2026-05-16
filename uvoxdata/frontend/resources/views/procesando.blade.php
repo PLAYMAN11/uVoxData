@@ -1,428 +1,353 @@
-{{--
-=======================================================================
-  PROCESANDO.BLADE.PHP
-=======================================================================
+@extends('layouts.app')
 
-  CÓMO CONECTAR EL BACKEND (Laravel 12 / PHP 8.2):
+@section('shellClass', 'light-shell')
 
-  OPCIÓN A — POLLING (recomendada, sin dependencias extra)
-  ─────────────────────────────────────────────────────────
-  1. El controlador lanza un Job en cola y guarda el progreso en Cache:
+@section('header')
+    <x-app-header :back="route('home')" title="Procesando" />
+@endsection
 
-     // EmergenciaController.php
-     public function procesar(Request $request)
-     {
-         $jobId = Str::uuid();
-         Cache::put("job_progress_{$jobId}", 0, now()->addMinutes(5));
-         ProcesarDocumentoJob::dispatch($jobId, $request->all());
-         return view('procesando', compact('jobId'));
-     }
+@section('content')
 
-  2. El Job actualiza el progreso en Cache conforme avanza:
+<div class="procesando-screen">
 
-     // ProcesarDocumentoJob.php
-     public function handle()
-     {
-         Cache::put("job_progress_{$this->jobId}", 25);   // paso 1 listo
-         // ... lógica ...
-         Cache::put("job_progress_{$this->jobId}", 50);   // paso 2 listo
-         // ...
-         Cache::put("job_progress_{$this->jobId}", 75);   // paso 3 listo
-         // ...
-         Cache::put("job_progress_{$this->jobId}", 100);  // todo listo
-         Cache::put("job_done_{$this->jobId}", route('resultado', $this->jobId), now()->addMinutes(5));
-     }
+    {{-- Anillo animado con lupa central --}}
+    <div class="ring-wrap">
+        <svg class="ring-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle class="ring-track" cx="70" cy="70" r="62"/>
+            <circle class="ring-dash-small" cx="70" cy="70" r="62"/>
+            <circle class="ring-arc" cx="70" cy="70" r="62" transform="rotate(-90 70 70)"/>
+        </svg>
 
-  3. Expón un endpoint JSON que el JS consulta cada ~800ms:
+        <div class="ring-inner">
+            {{-- Lupin 6×6: canvas + /assets/lupin-processing.png; si falla el PNG queda el SVG --}}
+            <div id="lupa-procesando" class="lupa-stage lupa-stage--processing">
+                <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="18" cy="18" r="12" fill="#E8EEFF" stroke="#4A7CF7" stroke-width="2"/>
+                    <ellipse cx="18" cy="18" rx="6" ry="4" fill="#fff"/>
+                    <circle cx="18" cy="18" r="2.5" fill="#2A50C8"/>
+                    <circle cx="19.2" cy="16.8" r="0.9" fill="#fff"/>
+                    <line x1="27" y1="27" x2="34" y2="34" stroke="#6A3FC8" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+    </div>
 
-     // routes/web.php
-     Route::get('/emergencia/progreso/{jobId}', function ($jobId) {
-         return response()->json([
-             'progress' => Cache::get("job_progress_{$jobId}", 0),
-             'done'     => Cache::has("job_done_{$jobId}"),
-             'redirect' => Cache::get("job_done_{$jobId}"),
-         ]);
-     })->name('emergencia.progreso');
+    <div class="procesando-card">
+        <h1 class="procesando-title">Respira. Estoy contigo<br>Lo resolveremos paso a paso</h1>
+        <p class="procesando-sub">Esto puede tomar unos segundos…</p>
 
-  4. La vista recibe $jobId via Blade y el JS hace polling a ese endpoint.
-     Cuando done=true, redirige automáticamente con un breve delay.
+        <div class="procesando-progress">
+            <div class="procesando-progress-track">
+                <div class="procesando-progress-fill" id="progressFill"></div>
+            </div>
+        </div>
 
-  OPCIÓN B — LARAVEL REVERB / BROADCASTING (WebSockets)
-  ──────────────────────────────────────────────────────
-  - Emite JobProgressUpdated event con $progress desde el Job.
-  - El frontend escucha el canal privado con Echo + Reverb.
-  - Más complejo pero actualización instantánea sin polling.
+        <div class="procesando-steps">
+            @foreach ([
+                'Revisando documento',
+                'Identificando tipo de procedimiento',
+                'Consultando fuentes oficiales',
+                'Generando orientación',
+            ] as $idx => $label)
+                <div class="procesando-step" id="step{{ $idx + 1 }}">
+                    <div class="procesando-step-icon">
+                        <svg class="spin-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="8" fill="none" stroke="#DDE0EE" stroke-width="2.5"/>
+                            <path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="#4A7CF7" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                        <svg class="check-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 10l4 4 8-8" stroke="#22C55E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                    </div>
+                    <span class="procesando-step-label">{{ $label }}</span>
+                </div>
+            @endforeach
+        </div>
 
-  NOTA SOBRE LAS "PALOMAS" (checkmarks):
-  ──────────────────────────────────────
-  Son 100% CSS/JS hardcodeadas. Se activan por umbrales de la barra:
-    ≥  1% → spinner en "Revisando documento"
-    ≥ 25% → ✓ Revisando documento  +  spinner en "Identificando..."
-    ≥ 50% → ✓ Identificando...     +  spinner en "Consultando..."
-    ≥ 75% → ✓ Consultando...       +  spinner en "Generando orientación"
-    =100% → ✓ Generando orientación (y redirige)
+        <div class="procesando-footer">
+            <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="6" width="11" height="8" rx="2" stroke="#9298B0" stroke-width="1.5"/>
+                <path d="M5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="#9298B0" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="7.5" cy="10" r="1" fill="#9298B0"/>
+            </svg>
+            <span>No guardamos ningún dato sensible</span>
+        </div>
+    </div>
 
-  El círculo exterior es puramente CSS (rotación + stroke-dashoffset).
-=======================================================================
---}}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Procesando</title>
+</div>
+
+@push('styles')
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+.light-shell .app-main { padding: 0; background: linear-gradient(160deg, #F0F2FA 0%, #E8ECF5 40%, #EDF0F8 100%); }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-    background: #eef0f8;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .screen {
+.procesando-screen {
     width: 100%;
-    max-width: 390px;
-    min-height: 100vh;
-    background: linear-gradient(160deg, #f0f2fa 0%, #e8ecf5 40%, #edf0f8 100%);
+    min-height: 100%;
+    padding: 32px 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     overflow: hidden;
-  }
+}
 
-  /* Decorative circles top-right */
-  .deco {
+.procesando-screen::before,
+.procesando-screen::after {
+    content: '';
     position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.procesando-screen::before {
     top: -60px; right: -60px;
     width: 220px; height: 220px;
-    border-radius: 50%;
     border: 28px solid rgba(180,188,220,0.18);
-    pointer-events: none;
-  }
-  .deco2 {
-    position: absolute;
+}
+
+.procesando-screen::after {
     top: 30px; right: -30px;
     width: 140px; height: 140px;
-    border-radius: 50%;
     border: 18px solid rgba(180,188,220,0.12);
-    pointer-events: none;
-  }
+}
 
-  /* ── Animated ring ── */
-  .ring-wrap {
-    margin-top: 90px;
+/* Anillo */
+.ring-wrap {
     position: relative;
-    width: 140px; height: 140px;
-    display: flex; align-items: center; justify-content: center;
-  }
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
 
-  .ring-svg {
+.ring-svg {
     position: absolute;
-    top: 0; left: 0;
-    width: 140px; height: 140px;
+    inset: 0;
+    width: 140px;
+    height: 140px;
     animation: ring-rotate 2.4s linear infinite;
     transform-origin: center;
-  }
+}
 
-  @keyframes ring-rotate { to { transform: rotate(360deg); } }
+@keyframes ring-rotate { to { transform: rotate(360deg); } }
 
-  .ring-track {
+.ring-track {
     fill: none;
-    stroke: #d8dcee;
+    stroke: #D8DCEE;
     stroke-width: 8;
-  }
-  .ring-arc {
+}
+
+.ring-arc {
     fill: none;
-    stroke: #4a7cf7;
+    stroke: #4A7CF7;
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 340;
     stroke-dashoffset: 90;
     animation: ring-dash 2.4s ease-in-out infinite;
-  }
-  @keyframes ring-dash {
+}
+
+@keyframes ring-dash {
     0%   { stroke-dashoffset: 90; }
     50%  { stroke-dashoffset: 280; }
     100% { stroke-dashoffset: 90; }
-  }
-  .ring-dash-small {
+}
+
+.ring-dash-small {
     fill: none;
-    stroke: #bcc4e8;
+    stroke: #BCC4E8;
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 24 316;
     stroke-dashoffset: -260;
-  }
+}
 
-  .ring-inner {
-    width: 76px; height: 76px;
-    background: #fff;
+.ring-inner {
+    width: clamp(104px, 30vmin, 132px);
+    height: clamp(104px, 30vmin, 132px);
+    background: transparent;
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 16px rgba(74,124,247,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
     z-index: 1;
-  }
-  .ring-inner svg { width: 42px; height: 42px; }
+    flex-shrink: 0;
+}
 
-  /* ── Card ── */
-  .card {
-    background: rgba(255,255,255,0.82);
+/* Card */
+.procesando-card {
+    background: rgba(255,255,255,0.86);
     backdrop-filter: blur(12px);
     border-radius: 28px 28px 0 0;
-    margin-top: 36px;
+    margin-top: 28px;
     width: 100%;
+    max-width: min(100%, 480px);
+    margin-left: auto;
+    margin-right: auto;
     flex: 1;
-    padding: 32px 28px 24px;
+    padding: 28px clamp(18px, 5vw, 24px) 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    z-index: 1;
+    box-sizing: border-box;
+}
 
-  .card-title {
+.procesando-title {
     font-size: 20px;
     font-weight: 700;
-    color: #1a1d2e;
+    color: #1A1D2E;
     text-align: center;
     line-height: 1.35;
     letter-spacing: -0.3px;
-    margin-bottom: 10px;
-  }
-  .card-sub {
-    font-size: 14px;
-    color: #8a90a8;
-    text-align: center;
-    margin-bottom: 24px;
-  }
+    margin: 0 0 8px;
+}
 
-  /* ── Progress bar ── */
-  .progress-wrap { width: 100%; margin-bottom: 28px; }
-  .progress-track {
+.procesando-sub {
+    font-size: 14px;
+    color: #8A90A8;
+    text-align: center;
+    margin: 0 0 22px;
+}
+
+.procesando-progress {
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+.procesando-progress-track {
     width: 100%;
     height: 8px;
-    background: #dde0ee;
+    background: #DDE0EE;
     border-radius: 8px;
     overflow: hidden;
-  }
-  .progress-fill {
+}
+
+.procesando-progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #4a7cf7, #6a9bff);
+    background: linear-gradient(90deg, #4A7CF7, #6A9BFF);
     border-radius: 8px;
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+}
 
-  /* ── Steps ── */
-  .steps { width: 100%; display: flex; flex-direction: column; gap: 18px; }
+.procesando-steps {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-  .step {
+.procesando-step {
     display: flex;
     align-items: center;
     gap: 12px;
     opacity: 0.3;
     transition: opacity 0.4s ease;
-  }
-  .step.active { opacity: 1; }
-  .step.done   { opacity: 1; }
+}
 
-  .step-icon {
-    width: 22px; height: 22px;
+.procesando-step.active,
+.procesando-step.done { opacity: 1; }
+
+.procesando-step-icon {
+    width: 22px;
+    height: 22px;
     flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-  .spin-svg {
-    width: 20px; height: 20px;
-    animation: spin 1s linear infinite;
+.spin-svg,
+.check-svg {
+    width: 20px;
+    height: 20px;
     display: none;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+}
 
-  .check-svg { width: 20px; height: 20px; display: none; }
+.spin-svg { animation: ov-spin 1s linear infinite; }
 
-  .step.active .spin-svg  { display: block; }
-  .step.active .check-svg { display: none; }
-  .step.done   .spin-svg  { display: none; }
-  .step.done   .check-svg { display: block; }
+.procesando-step.active .spin-svg  { display: block; }
+.procesando-step.done   .check-svg { display: block; }
 
-  .step-label {
+.procesando-step-label {
     font-size: 15px;
     font-weight: 500;
-    color: #1a1d2e;
-  }
+    color: #1A1D2E;
+}
 
-  /* ── Footer ── */
-  .footer {
+.procesando-footer {
     width: 100%;
     margin-top: auto;
-    padding-top: 24px;
+    padding-top: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #9298b0;
+    color: #9298B0;
     font-size: 13px;
-  }
-  .footer svg { width: 15px; height: 15px; opacity: 0.7; }
+}
+
+.procesando-footer svg { width: 15px; height: 15px; opacity: 0.7; }
 </style>
-</head>
-<body>
-<div class="screen">
-  <div class="deco"></div>
-  <div class="deco2"></div>
+@endpush
 
-  <!-- Animated ring -->
-  <div class="ring-wrap">
-    <svg class="ring-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-      <circle class="ring-track" cx="70" cy="70" r="62"/>
-      <circle class="ring-dash-small" cx="70" cy="70" r="62"/>
-      <circle class="ring-arc" cx="70" cy="70" r="62" transform="rotate(-90 70 70)"/>
-    </svg>
-    <div class="ring-inner">
-      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="18" cy="18" r="12" fill="#e8eeff" stroke="#4a7cf7" stroke-width="2"/>
-        <ellipse cx="18" cy="18" rx="6" ry="4" fill="#fff"/>
-        <circle cx="18" cy="18" r="2.5" fill="#2a50c8"/>
-        <circle cx="19.2" cy="16.8" r="0.9" fill="#fff"/>
-        <line x1="27" y1="27" x2="34" y2="34" stroke="#6a3fc8" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-    </div>
-  </div>
-
-  <!-- Card -->
-  <div class="card">
-    <h1 class="card-title">Respira. Estoy contigo<br>Lo resolveremos paso a paso</h1>
-    <p class="card-sub">Esto puede tomar unos segundos...</p>
-
-    <div class="progress-wrap">
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-
-    <div class="steps">
-
-      <div class="step" id="step1">
-        <div class="step-icon">
-          <svg class="spin-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="8" fill="none" stroke="#dde0ee" stroke-width="2.5"/>
-            <path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="#4a7cf7" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <svg class="check-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 10l4 4 8-8" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <span class="step-label">Revisando documento</span>
-      </div>
-
-      <div class="step" id="step2">
-        <div class="step-icon">
-          <svg class="spin-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="8" fill="none" stroke="#dde0ee" stroke-width="2.5"/>
-            <path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="#4a7cf7" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <svg class="check-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 10l4 4 8-8" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <span class="step-label">Identificando tipo de procedimiento</span>
-      </div>
-
-      <div class="step" id="step3">
-        <div class="step-icon">
-          <svg class="spin-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="8" fill="none" stroke="#dde0ee" stroke-width="2.5"/>
-            <path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="#4a7cf7" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <svg class="check-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 10l4 4 8-8" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <span class="step-label">Consultando fuentes oficiales</span>
-      </div>
-
-      <div class="step" id="step4">
-        <div class="step-icon">
-          <svg class="spin-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="8" fill="none" stroke="#dde0ee" stroke-width="2.5"/>
-            <path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="#4a7cf7" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <svg class="check-svg" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 10l4 4 8-8" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <span class="step-label">Generando orientación</span>
-      </div>
-
-    </div>
-
-    <div class="footer">
-      <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="6" width="11" height="8" rx="2" stroke="#9298b0" stroke-width="1.5"/>
-        <path d="M5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="#9298b0" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="7.5" cy="10" r="1" fill="#9298b0"/>
-      </svg>
-      No guardamos ningun dato sensible
-    </div>
-  </div>
-</div>
-
+@push('scripts')
 <script>
-  // ─── Config ────────────────────────────────────────────────────────
-  // $jobId es inyectado por Blade desde el controlador.
-  // Cuando JOB_ID = 'demo', corre simulación local (sin backend).
-  const JOB_ID   = "{{ $jobId ?? 'demo' }}";
-  const POLL_URL = "/emergencia/progreso/" + JOB_ID;
+(function bootProcesando() {
+    // Espera a que app.js cargue (define window.OrientaVox.mountLupa)
+    function start() {
+        // Lupin 6×6 — /assets/lupin-processing.png (fallback al SVG si falta el PNG)
+        window.OrientaVox?.mountLupa?.(document.getElementById('lupa-procesando'), { variant: 'processing' });
+    }
+    if (window.OrientaVox?.mountLupa) start();
+    else window.addEventListener('load', start, { once: true });
+})();
 
-  // Umbrales CSS para activar/completar cada paso
-  // activateAt = % para mostrar spinner | doneAt = % para mostrar paloma
-  const STEPS = [
+// ─── Pasos progresivos ─────────────────────────────────────────────────
+const STEPS = [
     { id: 'step1', activateAt: 1,  doneAt: 25  },
     { id: 'step2', activateAt: 25, doneAt: 50  },
     { id: 'step3', activateAt: 50, doneAt: 75  },
     { id: 'step4', activateAt: 75, doneAt: 100 },
-  ];
+];
 
-  const fill = document.getElementById('progressFill');
+const fill = document.getElementById('progressFill');
 
-  function applyProgress(pct) {
+function applyProgress(pct) {
     fill.style.width = pct + '%';
     STEPS.forEach(s => {
-      const el = document.getElementById(s.id);
-      el.classList.remove('active', 'done');
-      if      (pct >= s.doneAt)    el.classList.add('done');
-      else if (pct >= s.activateAt) el.classList.add('active');
+        const el = document.getElementById(s.id);
+        el.classList.remove('active', 'done');
+        if      (pct >= s.doneAt)    el.classList.add('done');
+        else if (pct >= s.activateAt) el.classList.add('active');
     });
-  }
+}
 
-  // ─── Modo DEMO ──────────────────────────────────────────────────────
-  if (JOB_ID === 'demo') {
-    let p = 0;
-    const t = setInterval(() => {
-      p += 2;
-      applyProgress(Math.min(p, 100));
-      if (p >= 100) clearInterval(t);
-    }, 80);
+// Simulación local del avance — la respuesta real ya está en sessionStorage
+// desde el paso anterior (documento o descripción). Damos ~3.2s de "calma"
+// y luego redirigimos a resultado.
+const REDIRECT_TARGET = '{{ route('consulta.resultado') }}';
+const HOME = '{{ route('home') }}';
 
-  } else {
-    // ─── Modo REAL: polling JSON al endpoint Laravel ────────────────
-    // Endpoint debe retornar: { progress: 0-100, done: bool, redirect: string|null }
-    const interval = setInterval(async () => {
-      try {
-        const res  = await fetch(POLL_URL, { headers: { Accept: 'application/json' } });
-        const data = await res.json();
-        applyProgress(data.progress ?? 0);
-        if (data.done) {
-          clearInterval(interval);
-          setTimeout(() => { window.location.href = data.redirect ?? '/'; }, 700);
-        }
-      } catch (e) { /* silencioso — reintenta en el siguiente tick */ }
-    }, 800);
-  }
+const hasResult = !!sessionStorage.getItem('rag_resultado');
+
+let pct = 0;
+const tick = setInterval(() => {
+    pct += 2;
+    applyProgress(Math.min(pct, 100));
+    if (pct >= 100) {
+        clearInterval(tick);
+        setTimeout(() => {
+            window.location.href = hasResult ? REDIRECT_TARGET : HOME;
+        }, 500);
+    }
+}, 64);
 </script>
-</body>
-</html>
+@endpush
+
+
+@endsection

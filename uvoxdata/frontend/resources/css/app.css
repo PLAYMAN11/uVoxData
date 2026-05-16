@@ -1,40 +1,1175 @@
-/* =========================
-   BACKGROUND ARCS
-========================= */
+/* =====================================================================
+   OrientaVox — Estilos base compartidos
+   Reutilizables por todas las vistas. Cada blade conserva solo overrides
+   puntuales (decoración, badges específicos, etc.).
+====================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. SHELL CLARO (paginas internas tipo wizard / resultado)
+   Se activa con: @section('shellClass', 'light-shell')
+--------------------------------------------------------------------- */
+
+.light-shell { background: #FFFFFF !important; }
+
+.light-shell .app-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E9EEF6;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    height: auto;
+    min-height: 56px;
+}
+
+.light-shell .app-main {
+    background: #FFFFFF;
+    padding: 28px 20px 20px;
+    position: relative;
+}
+
+.light-shell .app-bottom {
+    background: #FFFFFF;
+    border-top: 1px solid #E9EEF6;
+}
+
+/* Variante con fondo gris/azulado (resultado) */
+.light-shell.shell-soft { background: #F1F5FB !important; }
+.light-shell.shell-soft .app-main {
+    background: #F1F5FB;
+    padding: 20px clamp(12px, 4vw, 20px);
+    max-width: min(100%, 440px);
+    margin-inline: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------
+   2. HEADER REUTILIZABLE (lh-*)
+--------------------------------------------------------------------- */
+
+.lh-header {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.lh-back {
+    color: #1E293B;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.lh-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1E293B;
+    letter-spacing: -0.01em;
+}
+
+.lh-title-danger { color: #EF4444; }
+
+.lh-menu-btn {
+    background: #FFFFFF;
+    border: 1.5px solid #D1D9E6;
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+.lh-menu-btn:hover { background: #F1F5F9; }
+
+/* ---------------------------------------------------------------------
+   3. PROGRESS (Paso X de Y)
+--------------------------------------------------------------------- */
+
+.lh-step-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748B;
+    letter-spacing: 0.01em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.lh-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lh-progress-track {
+    flex: 1;
+    height: 6px;
+    background: #E2E8F0;
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.lh-progress-fill {
+    height: 100%;
+    background: #2F77E2;
+    border-radius: 99px;
+    transition: width .4s ease;
+}
+
+.lh-progress-fill.danger { background: #EF4444; }
+
+.lh-progress-check {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------
+   4. TIPOGRAFIA DE PREGUNTA / TITULO DE WIZARD
+--------------------------------------------------------------------- */
+
+.lh-question {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0F1D35;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.lh-subtitle {
+    font-size: 14px;
+    color: #64748B;
+    line-height: 1.55;
+    margin: 8px 0 0;
+}
+
+/* ---------------------------------------------------------------------
+   5. OPTION CARDS (selecciones del wizard)
+--------------------------------------------------------------------- */
+
+.lh-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2EAF4;
+    border-radius: 16px;
+    padding: 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s, background .15s, transform .12s;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.lh-card:hover {
+    border-color: #2F77E2;
+    box-shadow: 0 0 0 3px rgba(47,111,232,.08);
+}
+
+.lh-card:active {
+    transform: scale(0.98);
+    background: #F1F5FE;
+}
+
+.lh-card-icon {
+    width: 48px;
+    height: 48px;
+    background: #E7EDFE;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lh-card-icon.red    { background: #FFF1F1; }
+.lh-card-icon.orange { background: #FFF4EC; }
+.lh-card-icon.purple { background: #F2F0FF; }
+.lh-card-icon.green  { background: #ECFDF5; }
+.lh-card-icon.yellow { background: #FEF9C3; }
+
+.lh-card-body {
+    flex: 1;
+    text-align: start;
+    min-width: 0;
+}
+
+.lh-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0 0 2px;
+    line-height: 1.2;
+}
+
+.lh-card-sub {
+    font-size: 12px;
+    color: #94A3B8;
+    margin: 0;
+    line-height: 1.35;
+}
+
+.lh-chevron {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: #C7C7CC;
+}
+
+/* ---------------------------------------------------------------------
+   6. AYUDA / LINK SECUNDARIO
+--------------------------------------------------------------------- */
+
+.lh-help {
+    font-size: 13px;
+    color: #64748B;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lh-help:hover { color: #2F77E2; }
+
+/* ---------------------------------------------------------------------
+   7. DECORACIONES DE FONDO (circulos suaves)
+--------------------------------------------------------------------- */
+
+.doc-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.doc-bg::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #C7D9F8 0%, transparent 70%);
+    top: -80px;
+    right: -100px;
+    opacity: 0.45;
+}
+
+.doc-bg::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #D4E4FB 0%, transparent 70%);
+    bottom: 40px;
+    right: -60px;
+    opacity: 0.35;
+}
+
+.doc-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+/* Variante en rojo para flujo de urgencia (paso 1) */
+.doc-bg.danger::before {
+    background: radial-gradient(circle, #FFD1D6 0%, transparent 70%);
+}
+
+.doc-bg.danger::after {
+    background: radial-gradient(circle, #FFE4E6 0%, transparent 70%);
+}
+
+/* ---------------------------------------------------------------------
+   8. RESULTADO (res-*)
+--------------------------------------------------------------------- */
+
+.res-doc-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.res-doc-icon {
+    width: 52px;
+    height: 52px;
+    background: #EEF3FD;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.res-doc-tipo {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0;
+}
+
+.res-doc-auth {
+    font-size: 12px;
+    color: #64748B;
+    margin: 0;
+}
+
+.res-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+}
+
+.res-badge-alta  { background: #FEE2E2; color: #DC2626; }
+.res-badge-media { background: #FEF3C7; color: #D97706; }
+.res-badge-baja  { background: #DCFCE7; color: #16A34A; }
+.res-badge-sin   { background: #E2E8F0; color: #64748B; }
+
+.res-urgency {
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border: 1.5px solid #FECACA;
+    background: #FFF5F5;
+}
+
+.res-urgency.media { border-color: #FDE68A; background: #FFFBEB; }
+.res-urgency.baja  { border-color: #BBF7D0; background: #F0FDF4; }
+.res-urgency.sin   { border-color: #CBD5E1; background: #F8FAFC; }
+
+.res-urgency-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0F1D35;
+    line-height: 1.25;
+    margin: 0 0 4px;
+}
+
+.res-urgency-sub {
+    font-size: 14px;
+    font-weight: 600;
+    color: #DC2626;
+    margin: 0 0 12px;
+}
+
+.res-urgency.media .res-urgency-sub { color: #D97706; }
+.res-urgency.baja  .res-urgency-sub { color: #16A34A; }
+.res-urgency.sin   .res-urgency-sub { color: #64748B; }
+
+.res-urgency-bar-track {
+    height: 8px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.res-urgency-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: #DC2626;
+    transition: width .4s;
+}
+
+.res-urgency.media .res-urgency-bar-fill { background: #F59E0B; }
+.res-urgency.baja  .res-urgency-bar-fill { background: #22C55E; }
+.res-urgency.sin   .res-urgency-bar-fill { background: #94A3B8; }
+
+/* Tarjeta colapsable / sección de info */
+.res-section {
+    background: #FFFFFF;
+    border: 1.5px solid #E2EAF4;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.res-section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.res-section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.res-section-icon.purple { background: #F3E8FF; }
+.res-section-icon.yellow { background: #FEF9C3; }
+.res-section-icon.green  { background: #DCFCE7; }
+
+.res-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0;
+    flex: 1;
+}
+
+.res-section-toggle {
+    color: #94A3B8;
+    transition: transform .2s ease;
+    flex-shrink: 0;
+}
+
+.res-section[data-open="true"] .res-section-toggle {
+    transform: rotate(180deg);
+}
+
+.res-section-body {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.6;
+    margin: 12px 0 0 54px;
+    display: block;
+}
+
+.res-section[data-open="false"] .res-section-body {
+    display: none;
+}
+
+.res-section-list {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.7;
+    margin: 12px 0 0 54px;
+    padding-left: 18px;
+}
+
+.res-section[data-open="false"] .res-section-list {
+    display: none;
+}
+
+/* Barra inferior de acciones (Links / Escuchar / Subir nuevo documento) */
+.res-action-bar {
+    display: flex;
+    gap: 8px;
+    background: #FFFFFF;
+    border: 1.5px solid #E2EAF4;
+    border-radius: 16px;
+    padding: 10px;
+    margin: 14px 0;
+}
+
+.res-action {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 6px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #1E293B;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.res-action:hover { background: #F1F5F9; }
+.res-action.active { background: #EEF3FD; color: #2F77E2; }
+
+.res-action-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.res-action-text {
+    text-align: center;
+    line-height: 1.25;
+    max-width: 100%;
+    padding: 0 2px;
+}
+
+/* Modal de enlaces oficiales (resultado) */
+.res-links-dlg {
+    max-width: min(360px, 100vw - 32px);
+    width: 100%;
+    border: none;
+    border-radius: 18px;
+    padding: 0;
+    box-shadow: 0 20px 50px rgba(15, 29, 53, 0.18);
+}
+
+.res-links-dlg::backdrop {
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.res-links-dlg-inner {
+    padding: 20px 20px 16px;
+}
+
+.res-links-dlg-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 800;
+    color: #0F1D35;
+    letter-spacing: -0.02em;
+}
+
+.res-links-dlg-sub {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #64748B;
+    line-height: 1.45;
+}
+
+.res-links-dlg-list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.res-links-dlg-list a {
+    display: block;
+    padding: 12px 14px;
+    background: #F8FAFC;
+    border: 1.5px solid #E2EAF4;
+    border-radius: 12px;
+    color: #2F77E2;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .12s, border-color .12s;
+}
+
+.res-links-dlg-list a:hover {
+    background: #EEF3FD;
+    border-color: #2F77E2;
+}
+
+.res-links-dlg-actions {
+    margin: 0;
+    padding: 0 20px 18px;
+}
+
+.res-links-dlg-actions button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1.5px solid #D1D9E6;
+    background: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E293B;
+    cursor: pointer;
+}
+
+.res-links-dlg-actions button:hover {
+    background: #F1F5F9;
+}
+
+/* CTA preguntas */
+.res-cta {
+    background: #FFFFFF;
+    border: 1.5px solid #E2EAF4;
+    border-radius: 16px;
+    padding: clamp(18px, 4vw, 22px) clamp(14px, 4vw, 18px);
+    text-align: center;
+    margin-top: 6px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.res-cta-icon {
+    width: clamp(100px, 30vmin, 136px);
+    height: clamp(100px, 30vmin, 136px);
+    background: transparent;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.res-cta-title {
+    font-size: clamp(14px, 3.8vw, 16px);
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0 0 6px;
+    line-height: 1.3;
+    text-wrap: balance;
+}
+
+.res-cta-sub {
+    font-size: clamp(12.5px, 3.2vw, 14px);
+    color: #64748B;
+    margin: 0 auto 16px;
+    line-height: 1.5;
+    max-width: 36em;
+}
+
+.res-btn-si {
+    background: #5FA7E8;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.res-btn-si:hover { background: #2F6FE8; }
+
+.res-btn-no {
+    background: #FFFFFF;
+    color: #1E293B;
+    border: 1.5px solid #D1D9E6;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.res-btn-no:hover { background: #F1F5F9; }
+
+/* Loading / error genérico */
+.res-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 12px;
+    color: #64748B;
+    font-size: 14px;
+}
+
+.res-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #E2E8F0;
+    border-top-color: #2F6FE8;
+    border-radius: 50%;
+    animation: ov-spin .7s linear infinite;
+}
+
+/* ---------------------------------------------------------------------
+   9. ANIMACIONES
+--------------------------------------------------------------------- */
+
+@keyframes ov-spin { to { transform: rotate(360deg); } }
+
+@keyframes ov-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ov-fade-in { animation: ov-fade-in .25s ease-out both; }
+
+/* ---------------------------------------------------------------------
+   10. HOME (arcos de fondo decorativos)
+--------------------------------------------------------------------- */
 
 .home-bg-arcs {
-  position: absolute;
-  top: 60px;
-  left: -40px;
-  width: 100%;
-  height: 340px;
-  pointer-events: none;
-  z-index: 0;
+    position: absolute;
+    top: 60px;
+    left: -40px;
+    width: 100%;
+    height: 340px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .arc {
-  position: absolute;
-  border-radius: 50%;
-  border: 1.5px solid rgba(95, 167, 232, 0.2);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(95, 167, 232, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .arc-1 {
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(95,167,232,0.08), transparent 70%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(95,167,232,0.08), transparent 70%);
 }
 
 .arc-2 {
-  width: 310px;
-  height: 310px;
-  border-color: rgba(95,167,232,0.15);
+    width: 310px;
+    height: 310px;
+    border-color: rgba(95,167,232,0.15);
 }
 
 .arc-3 {
-  width: 420px;
-  height: 420px;
-  border-color: rgba(95,167,232,0.08);
+    width: 420px;
+    height: 420px;
+    border-color: rgba(95,167,232,0.08);
+}
+
+/* ---------------------------------------------------------------------
+   11. CONTENEDOR LUPA (sprite canvas 5×5 o 6×6, fallback SVG, bob 5s; sin fondo)
+--------------------------------------------------------------------- */
+
+.lupa-stage {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Tamaños por contexto (el JS lee clientWidth/Height para el canvas) */
+.lupa-stage--cta {
+    width: clamp(80px, 24vmin, 112px);
+    height: clamp(80px, 24vmin, 112px);
+    flex-shrink: 0;
+}
+
+.lupa-stage--chat {
+    width: clamp(76px, 23vmin, 104px);
+    height: clamp(76px, 23vmin, 104px);
+    flex-shrink: 0;
+}
+
+.lupa-stage--processing {
+    width: min(100%, 120px);
+    height: min(100%, 120px);
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1;
+    margin: auto;
+}
+
+.lupa-stage > svg {
+    position: relative;
+    z-index: 1;
+    width: 82%;
+    height: 82%;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* Sin fondo ni recorte decorativo: el sprite se ve tal cual (p. ej. transparencia del PNG) */
+.lupa-stage.has-canvas {
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+}
+
+/* Movimiento vertical muy leve; un ciclo = 5 s (alineado al sprite en JS) */
+.lupa-stage--bob {
+    animation: lupin-bob 5s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes lupin-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.lupa-stage > canvas {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    z-index: 2;
+    display: block;
+    pointer-events: none;
+}
+
+/* Cuando la animación canvas está activa, ocultamos el SVG de fallback */
+.lupa-stage.has-canvas > svg { visibility: hidden; }
+
+/* ---------------------------------------------------------------------
+   12. CONSULTA / “chat” — orientación con Lupin y cards (sin hilo ni input)
+--------------------------------------------------------------------- */
+
+.light-shell.chat-shell .app-main {
+    padding: 14px clamp(12px, 4vw, 18px) 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-width: min(100%, 520px);
+    margin-inline: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.chat-screen {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Barra inferior: otro documento + inicio */
+.chat-foot {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+}
+
+.chat-foot-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chat-foot-btn--primary {
+    background: #5FA7E8;
+    color: #FFFFFF;
+    border: none;
+}
+
+.chat-foot-btn--primary:hover {
+    background: #2F6FE8;
+    color: #FFFFFF;
+}
+
+.chat-foot-btn--secondary {
+    background: #FFFFFF;
+    color: #1E293B;
+    border: 1.5px solid #D1D9E6;
+}
+
+.chat-foot-btn--secondary:hover {
+    background: #F1F5F9;
+    color: #1E293B;
+}
+
+.chat-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 2px 0 20px;
+}
+
+/* Cabecera: Lupin a la izquierda + texto guía */
+.chat-guide {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 3vw, 14px);
+    padding: 4px 0 2px;
+}
+
+.chat-guide-text {
+    flex: 1;
+    min-width: 0;
+    padding-top: 0;
+}
+
+.chat-guide-caption {
+    margin: 0;
+    font-size: clamp(12.5px, 3.4vw, 14px);
+    font-weight: 600;
+    color: #475569;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+}
+
+/* Lista de temas (cards acordeón) */
+.chat-topics {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-topic {
+    background: #FFFFFF;
+    border: 1.5px solid #E2EAF4;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15, 29, 53, 0.05);
+}
+
+.chat-topic-head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    transition: background .12s ease;
+}
+
+.chat-topic-head:hover {
+    background: #F8FAFC;
+}
+
+.chat-topic-head:focus-visible {
+    outline: 2px solid #2F77E2;
+    outline-offset: 2px;
+}
+
+.chat-topic-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1E293B;
+    line-height: 1.25;
+}
+
+.chat-topic-chevron {
+    flex-shrink: 0;
+    color: #94A3B8;
+    transition: transform .22s ease;
+}
+
+.chat-topic[data-open="true"] .chat-topic-chevron {
+    transform: rotate(180deg);
+}
+
+.chat-topic-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s ease;
+}
+
+.chat-topic[data-open="true"] .chat-topic-panel {
+    grid-template-rows: 1fr;
+}
+
+.chat-topic-panel-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.chat-topic-body {
+    padding: 0 14px 14px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #475569;
+}
+
+.chat-topic-body p {
+    margin: 0 0 8px;
+}
+
+.chat-topic-body p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-topic-body ul {
+    margin: 6px 0 0;
+    padding-left: 18px;
+}
+
+.chat-topic-body li {
+    margin-bottom: 4px;
+}
+
+/* ---------------------------------------------------------------------
+   Aviso de conectividad (Blade: no usar utilidades Tailwind no compiladas)
+--------------------------------------------------------------------- */
+.offline-connectivity-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    color: #991B1B;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.offline-connectivity-banner[hidden] {
+    display: none !important;
+}
+
+.offline-connectivity-banner__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* ---------------------------------------------------------------------
+   Chat IA (/consulta/chat) + utilidades accesibles
+--------------------------------------------------------------------- */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.chat-offline-hint {
+    font-size: 12px;
+    color: #B45309;
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin: 0 0 14px;
+}
+
+.chat-offline-hint[hidden] {
+    display: none !important;
+}
+
+.chat-ai-panel {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #E2E8F0;
+}
+
+.chat-ai-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 6px;
+}
+
+.chat-ai-sub {
+    font-size: 13px;
+    color: #64748B;
+    margin: 0 0 12px;
+    line-height: 1.45;
+}
+
+.chat-thread {
+    max-height: 280px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 4px 2px;
+}
+
+.chat-msg {
+    display: flex;
+}
+
+.chat-msg--user {
+    justify-content: flex-end;
+}
+
+.chat-msg--assistant {
+    justify-content: flex-start;
+}
+
+.chat-msg-bubble {
+    max-width: 92%;
+    padding: 10px 12px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.chat-msg--user .chat-msg-bubble {
+    background: #2563EB;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-msg--assistant .chat-msg-bubble {
+    background: #F1F5F9;
+    color: #1E293B;
+    border: 1px solid #E2E8F0;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-consulta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-input {
+    width: 100%;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.chat-input:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.chat-consulta-send {
+    align-self: flex-end;
+    background: #2563EB;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.chat-consulta-send:hover {
+    background: #1D4ED8;
 }

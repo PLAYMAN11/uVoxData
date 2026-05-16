@@ -1,8 +1,63 @@
 @extends('layouts.app')
 
+@section('header')
+    <x-app-header title="OrientaVox" :showMenu="true" />
+@endsection
+
 @section('content')
 
+<div class="home-screen">
+
+    {{-- Decoración --}}
+    <div class="home-bg">
+        <div class="circle circle-3"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-1"></div>
+    </div>
+
+    <div class="home-title-block">
+        <h1 class="home-title">
+            ¿Recibiste un<br>
+            <span class="home-title-blue">documento oficial?</span>
+        </h1>
+        <p class="home-subtitle">
+            Identifica rápidamente si requiere atención, qué implica y cuánto tiempo tienes para actuar.
+        </p>
+    </div>
+
+    <div class="home-actions">
+
+        {{-- Revisar documento (flujo normal) --}}
+        <a class="btn-primary-action" href="{{ route('consulta.documento') }}">
+            <span class="btn-left">
+                <span class="btn-title">Revisar documento</span>
+                <span class="btn-sub">Subir, escanear o describir</span>
+            </span>
+            <span class="btn-arrow" aria-hidden="true">›</span>
+        </a>
+
+        {{-- Orientación urgente --}}
+        <a class="btn-danger-action" href="{{ route('urgencia.documento') }}">
+            <span class="btn-left">
+                <span class="btn-title">Orientación urgente</span>
+                <span class="btn-sub">Necesito actuar rápido</span>
+            </span>
+            <span class="btn-arrow" aria-hidden="true">›</span>
+        </a>
+
+    </div>
+
+    <div class="home-demo-block">
+        <p class="home-demo-label">¿Quieres ver un ejemplo?</p>
+        <a href="{{ route('demo') }}" class="home-demo-link">Probar demo</a>
+    </div>
+
+</div>
+
+@push('styles')
 <style>
+.app-body { background: #F8FAFC; }
+
 .home-screen {
     position: relative;
     display: flex;
@@ -13,10 +68,7 @@
     overflow: hidden;
 }
 
-/* =========================
-   BACKGROUND CIRCLES
-========================= */
-
+/* Decoración de círculos */
 .home-bg {
     position: absolute;
     top: 120px;
@@ -28,7 +80,6 @@
     pointer-events: none;
 }
 
-/* base común */
 .circle {
     position: absolute;
     border-radius: 50%;
@@ -37,7 +88,6 @@
     transform: translate(-50%, -50%);
 }
 
-/* grande */
 .circle-3 {
     width: 420px;
     height: 420px;
@@ -45,7 +95,6 @@
     box-shadow: 0 30px 80px rgba(0,0,0,0.08);
 }
 
-/* medio */
 .circle-2 {
     width: 300px;
     height: 300px;
@@ -53,7 +102,6 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.06);
 }
 
-/* pequeño */
 .circle-1 {
     width: 180px;
     height: 180px;
@@ -61,10 +109,7 @@
     box-shadow: 0 10px 40px rgba(0,0,0,0.05);
 }
 
-/* =========================
-   Z LAYERS
-========================= */
-
+/* Z-index para que el contenido quede sobre la decoración */
 .home-title-block,
 .home-actions,
 .home-demo-block {
@@ -72,10 +117,7 @@
     z-index: 2;
 }
 
-/* =========================
-   TITULO
-========================= */
-
+/* Título */
 .home-title-block {
     text-align: start;
     margin-bottom: 60px;
@@ -87,22 +129,19 @@
     line-height: 1.2;
     color: #1E293B;
     margin: 0;
+    letter-spacing: -0.02em;
 }
 
-.home-title-blue {
-    color: #5FA7E8;
-}
+.home-title-blue { color: #5FA7E8; }
 
 .home-subtitle {
     font-size: 14px;
     color: #475569;
     margin-top: 10px;
+    line-height: 1.5;
 }
 
-/* =========================
-   BOTONES
-========================= */
-
+/* Botones principales */
 .home-actions {
     display: flex;
     flex-direction: column;
@@ -111,74 +150,66 @@
     margin-bottom: 20px;
 }
 
-/* AZUL */
-.btn-primary-action {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 16px 18px;
-
-    background: #2F77E2;
-    color: white;
-
-    border: none;
-    border-radius: 14px;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-/* ROJO */
+.btn-primary-action,
 .btn-danger-action {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 14px 18px;
-
-    background: white;
-    color: #EF4444;
-
-    border: 1.5px solid #EF4444;
     border-radius: 14px;
-
-    font-size: 15px;
-    font-weight: 600;
-
+    text-decoration: none;
     cursor: pointer;
+    transition: transform .12s ease, box-shadow .15s;
+    -webkit-tap-highlight-color: transparent;
 }
+
+.btn-primary-action {
+    background: #2F77E2;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 6px 18px rgba(47,119,226,0.25);
+}
+
+.btn-danger-action {
+    background: #FFFFFF;
+    color: #EF4444;
+    border: 1.5px solid #EF4444;
+}
+
+.btn-primary-action:hover,
+.btn-danger-action:hover { transform: translateY(-1px); }
+
+.btn-primary-action:active,
+.btn-danger-action:active { transform: scale(0.99); }
 
 .btn-left {
     display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.btn-danger-action .btn-left {
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
 }
 
-.btn-danger-action small {
-    font-size: 12px;
-    color: #94A3B8;
+.btn-title {
+    font-size: 15px;
+    font-weight: 700;
 }
+
+.btn-sub {
+    font-size: 12px;
+    opacity: .85;
+}
+
+.btn-primary-action .btn-sub { color: #DCE7FA; }
+.btn-danger-action  .btn-sub { color: #94A3B8; }
 
 .btn-arrow {
-    display: flex;
-    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
 }
 
-/* =========================
-   DEMO
-========================= */
-
+/* Demo link */
 .home-demo-block {
     margin-top: auto;
     text-align: center;
@@ -200,7 +231,6 @@
     font-weight: 700;
     color: #7C3AED;
     text-decoration: none;
-
     border-bottom: 1.5px solid #CBD5E1;
     padding-bottom: 2px;
 }
@@ -210,57 +240,6 @@
     border-bottom-color: #6D28D9;
 }
 </style>
-
-<div class="home-screen">
-
-    <!-- BACKGROUND -->
-    <div class="home-bg">
-        <div class="circle circle-3"></div>
-        <div class="circle circle-2"></div>
-        <div class="circle circle-1"></div>
-    </div>
-
-    <div class="home-title-block">
-        <h1 class="home-title">
-            ¿Recibiste un<br>
-            <span class="home-title-blue">documento oficial?</span>
-        </h1>
-
-        <p class="home-subtitle">
-            Identifica rápidamente si requiere atención, qué implica y cuánto tiempo tienes para actuar
-        </p>
-    </div>
-
-    <div class="home-actions">
-
-        <!-- Situación Normal -->
-        <button class="btn-primary-action" onclick="window.location.href='{{ route('consulta.documento') }}'">
-            <span class="btn-left">
-                Revisar documento
-            </span>
-            <span class="btn-arrow">➜</span>
-        </button>
-
-        <!-- Urgencia -->
-        <button class="btn-danger-action" onclick="window.location='{{ route('urgencia.documento') }}'">
-            <span class="btn-left">
-                <span>Orientación urgente</span>
-                <small>Necesito actuar rápido</small>
-            </span>
-
-            <span class="btn-arrow">➜</span>
-        </button>
-
-    </div>
-
-    <div class="home-demo-block">
-        <p class="home-demo-label">¿Quieres ver un ejemplo?</p>
-
-        <a href="#" class="home-demo-link">
-            Probar demo
-        </a>
-    </div>
-
-</div>
+@endpush
 
 @endsection

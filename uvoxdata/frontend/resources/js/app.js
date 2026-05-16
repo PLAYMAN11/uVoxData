@@ -1,10 +1,33 @@
 import './connectivity';
-import { consultarBackend, subirDocumento } from './api';
+import {
+    consultarBackend,
+    mapConsultaResponseToResultado,
+    orientacionDesdeTexto,
+    subirDocumento,
+} from './api';
+import { mountConsultaChat } from './chat';
+import { mountLupa } from './lupa';
 
+// Registrar service worker para PWA
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
 
+// Exponer helpers que necesitan invocarse desde scripts inline en blades
+window.OrientaVox = Object.assign(window.OrientaVox || {}, {
+    mountLupa,
+    consultarBackend,
+    mapConsultaResponseToResultado,
+    orientacionDesdeTexto,
+    subirDocumento,
+    mountConsultaChat,
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    mountConsultaChat();
+});
+
+// ─── Form de consulta legacy (vista /demo) ─────────────────────────────
 const form = document.getElementById('consulta-form');
 const textarea = document.getElementById('pregunta');
 const charCount = document.getElementById('char-count');

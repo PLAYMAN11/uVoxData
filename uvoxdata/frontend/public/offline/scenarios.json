@@ -1,0 +1,106 @@
+[
+  {
+    "id": "impugnacion-cedula-notificacion",
+    "palabras_clave": [
+      "cedula de notificacion",
+      "cédula de notificación",
+      "me notificaron",
+      "recibi una notificacion",
+      "recibí una notificación",
+      "impugnar una notificacion",
+      "impugnar una notificación",
+      "articulo 8 lgsmime",
+      "artículo 8 lgsmime"
+    ],
+    "respuesta": "Modo offline (limitado): este caso usa un ejemplo precargado de reglas. Para no inventar, confirma siempre el fundamento y el cómputo del plazo en tu notificación y en la autoridad competente. Si tienes Internet, consulta el comparador online para una respuesta más contextual.",
+    "fuentes": ["TEPJF", "LGSMIME (Cámara de Diputados)"]
+  },
+  {
+    "id": "plazo_impugnacion",
+    "palabras_clave": [
+      "plazo para impugnar",
+      "cuanto tiempo tengo para impugnar",
+      "cuánto tiempo tengo para impugnar",
+      "dias para impugnar",
+      "días para impugnar",
+      "4 dias para impugnar",
+      "vencimiento para impugnar"
+    ],
+    "respuesta": "Según la LGSMIME, el plazo general para interponer un medio de impugnación es de 4 días contados a partir del día siguiente a aquel en que se tenga conocimiento del acto o resolución impugnado (Art. 8). Verifica el cómputo en tu caso con la autoridad competente.",
+    "fuentes": ["LGSMIME Art. 8"]
+  },
+  {
+    "id": "recurso_apelacion",
+    "palabras_clave": [
+      "recurso de apelacion",
+      "recurso de apelación",
+      "rap",
+      "apelar al ine",
+      "apelacion electoral",
+      "apelación electoral"
+    ],
+    "respuesta": "El recurso de apelación es el medio para impugnar actos o resoluciones del INE, la FEPADE o el Secretario Ejecutivo del INE. El plazo general para interponerlo es de 4 días (LGSMIME Art. 40-50). Verifica el caso específico con la autoridad competente.",
+    "fuentes": ["LGSMIME Art. 40-50"]
+  },
+  {
+    "id": "juicio_revision_constitucional",
+    "palabras_clave": [
+      "juicio de revision constitucional",
+      "juicio de revisión constitucional",
+      "jrc",
+      "revision constitucional electoral",
+      "revisión constitucional electoral",
+      "impugnar autoridad electoral local"
+    ],
+    "respuesta": "El Juicio de Revisión Constitucional Electoral (JRC) procede para impugnar actos o resoluciones de las autoridades electorales locales que violen normas constitucionales. Solo puede ser promovido por partidos políticos (LGSMIME Art. 86-94). Verifica los requisitos vigentes.",
+    "fuentes": ["LGSMIME Art. 86-94"]
+  },
+  {
+    "id": "ubicar-autoridad",
+    "palabras_clave": [
+      "a quien acudir",
+      "a qué autoridad",
+      "a que autoridad",
+      "que autoridad debo",
+      "qué autoridad debo",
+      "donde presento",
+      "dónde presento",
+      "que tribunal es competente",
+      "qué tribunal es competente",
+      "autoridad competente electoral"
+    ],
+    "respuesta": "Si es credencial o padrón, suele iniciar en INE. Si es impugnación, busca la autoridad o tribunal competente. Si es queja, usa los canales oficiales del INE u OPLE. En offline no confirmo la autoridad exacta; verifica en línea.",
+    "fuentes": ["INE", "TEPJF"]
+  },
+  {
+    "id": "glosario-basico",
+    "palabras_clave": [
+      "glosario",
+      "que significa",
+      "qué significa",
+      "definicion",
+      "definición",
+      "terminos electorales",
+      "términos electorales",
+      "medio de impugnacion",
+      "medio de impugnación"
+    ],
+    "respuesta": "Glosario breve: plazo es el tiempo límite para actuar; notificación es la comunicación formal de una autoridad; autoridad competente es la institución que puede resolver tu asunto; medio de impugnación es la vía para controvertir un acto. Para fechas o casos puntuales, verifica en línea.",
+    "fuentes": ["INE", "TEPJF"]
+  },
+  {
+    "id": "consultar-en-linea-recomendacion",
+    "palabras_clave": [
+      "no tengo internet",
+      "estoy sin conexion",
+      "estoy sin conexión",
+      "modo offline",
+      "modo avion",
+      "modo avión",
+      "consultar en linea",
+      "consultar en línea"
+    ],
+    "respuesta": "En modo offline solo respondo con el catálogo precargado. Para datos que cambian (fechas, ubicaciones, estados de trámite) conviene conectarse a fuentes oficiales. Si depende de un dato no precargado, te lo aviso.",
+    "fuentes": ["INE", "TEPJF"]
+  }
+]

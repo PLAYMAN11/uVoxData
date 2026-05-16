@@ -1,10 +1,13 @@
-const CACHE_NAME = 'uvox-offline-v1';
+const CACHE_NAME = 'uvox-offline-v2';
 
 const OFFLINE_ASSETS = [
     '/',
     '/offline.html',
     '/offline/scenarios.json',
+    '/offline/intents.json',
 ];
+
+const OFFLINE_JSON = /^\/offline\/.*\.json$/;
 
 // INSTALL (seguro: no falla si algo no existe)
 self.addEventListener('install', (event) => {
@@ -52,14 +55,20 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // 🟡 cache normal
+    // JSON offline: cache-first, luego red (stale-while-revalidate ligero)
+    if (OFFLINE_JSON.test(url.pathname)) {
+        event.respondWith(cacheFirstJson(event.request));
+        return;
+    }
+
+    // 🟡 resto: red primero, fallback a caché
     event.respondWith(
         fetch(event.request)
             .then((resp) => {
                 const clone = resp.clone();
 
                 caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, clone);
+                    if (resp.ok) cache.put(event.request, clone);
                 });
 
                 return resp;
@@ -67,6 +76,22 @@ self.addEventListener('fetch', (event) => {
             .catch(() => caches.match(event.request))
     );
 });
+
+async function cacheFirstJson(request) {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request);
+    if (cached) {
+        fetch(request)
+            .then((resp) => {
+                if (resp.ok) cache.put(request, resp.clone());
+            })
+            .catch(() => {});
+        return cached;
+    }
+    const resp = await fetch(request);
+    if (resp.ok) await cache.put(request, resp.clone());
+    return resp;
+}
 
 // 🧠 CACHE SEGURO (NO revienta si un asset falla)
 async function safeCache() {

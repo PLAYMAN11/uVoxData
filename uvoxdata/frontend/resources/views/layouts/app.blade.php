@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    {{-- Rutas absolutas correctas para sprites (subcarpetas / artisan) --}}
+    <script>
+        window.OrientaVox = Object.assign(window.OrientaVox || {}, {
+            lupinDefaultSrc: @json(asset('assets/lupin-default.png')),
+            lupinProcessingSrc: @json(asset('assets/lupin-processing.png')),
+        });
+    </script>
+
     <title>OrientaVox</title>
 
     <link rel="manifest" href="/manifest.json">
@@ -33,6 +41,7 @@
             </header>
 
             <main class="app-main">
+                @include('consulta.partials.offline-banner')
                 @yield('content')
             </main>
 

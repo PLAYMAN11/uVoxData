@@ -7,11 +7,15 @@ Hay dos niveles de contenido:
 - `scenarios.json`: archivo simple que usa actualmente el frontend para responder en modo degradado.
 - `fallback/`: catálogo modular más completo, organizado por intenciones, casos, sinónimos y paquetes de reglas.
 
+## Sincronía con la PWA
+
+Los JSON que el navegador y el service worker leen deben existir bajo **`frontend/public/offline/`** (p. ej. copia de `scenarios.json` e `intents.json`). El catálogo “fuente” sigue viviendo en esta carpeta `uvoxdata/offline/`; al cambiar contenido, vuelve a copiar a `public/offline` antes de desplegar o probar offline.
+
 ## Flujo actual
 
-1. El service worker de `frontend/public/sw.js` guarda en caché `/offline/scenarios.json` junto con los assets principales de la app.
+1. El service worker de `frontend/public/sw.js` guarda en caché `/offline/scenarios.json` (e intents u otros JSON listados allí) junto con los assets principales de la app.
 2. Cuando `frontend/resources/js/api.js` detecta modo offline o falla la petición a `/consulta`, ejecuta `buscarOffline(pregunta)`.
-3. `buscarOffline` abre el caché `uvox-offline-v1`, lee `/offline/scenarios.json` y compara la pregunta del usuario contra cada lista de `palabras_clave`.
+3. `buscarOffline` abre el caché `uvox-offline-v2`, lee `/offline/scenarios.json` y, si no hay coincidencia, intenta `/offline/intents.json`; compara la pregunta del usuario contra cada lista de `palabras_clave` o keywords de intención.
 4. Si encuentra coincidencia, devuelve la `respuesta`, las `fuentes` y `modo: "degradado"`.
 5. Si no encuentra coincidencia, devuelve un mensaje genérico indicando que no hay conexión ni escenario offline aplicable.
 
