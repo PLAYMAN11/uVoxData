@@ -13,8 +13,18 @@ _splitter = RecursiveCharacterTextSplitter(
 )
 
 
+def _ya_indexado(fuente: str) -> bool:
+    """Verifica si una fuente ya está indexada en ChromaDB."""
+    resultado = get_vector_store().get(where={"fuente": fuente}, limit=1)
+    return len(resultado.get("ids", [])) > 0
+
+
 def ingestar_texto(texto: str, fuente: str) -> int:
     """Indexa texto plano enviado por la aplicación (uploads del usuario)."""
+    if _ya_indexado(fuente):
+        print(f">> '{fuente}' ya indexado, saltando.")
+        return 0
+
     doc = Document(page_content=texto, metadata={"fuente": fuente})
     chunks = _splitter.split_documents([doc])
 
@@ -28,8 +38,12 @@ def ingestar_pdf(ruta: str | Path, fuente: str | None = None) -> int:
     """Indexa un PDF directamente desde el servidor."""
     ruta = Path(ruta)
     fuente = fuente or ruta.name
-    docs = []
 
+    if _ya_indexado(fuente):
+        print(f">> '{fuente}' ya indexado, saltando.")
+        return 0
+
+    docs = []
     with pdfplumber.open(ruta) as pdf:
         for i, pagina in enumerate(pdf.pages):
             texto = (pagina.extract_text() or "").strip()
