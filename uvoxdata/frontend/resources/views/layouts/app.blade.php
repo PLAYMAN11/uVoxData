@@ -13,7 +13,7 @@
     <!-- Bootstrap (opcional pero válido en tu caso) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- VITE (OBLIGATORIO en Laravel 12) -->
+    <!-- VITE -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -25,7 +25,7 @@
         <div class="app-shell">
 
             <header class="app-header">
-                OrientaVox
+                <h1>Orienta<span>Vox</span></h1>
             </header>
 
             <main class="app-main">
