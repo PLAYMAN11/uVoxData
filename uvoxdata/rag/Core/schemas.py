@@ -32,8 +32,9 @@ class Confidence(BaseModel):
 
 
 class SystemInfo(BaseModel):
-    source: str
+    source: list[str]
     mode: str
+    links: list[str]
 
 
 class RAGResponse(BaseModel):
