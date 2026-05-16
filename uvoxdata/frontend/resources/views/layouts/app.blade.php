@@ -9,6 +9,7 @@
 
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0f172a">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap (opcional pero válido en tu caso) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">

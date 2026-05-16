@@ -120,7 +120,7 @@
 
     padding: 16px 18px;
 
-    background: #5FA7E8;
+    background: #2F77E2;
     color: white;
 
     border: none;
@@ -167,7 +167,7 @@
 
 .btn-danger-action small {
     font-size: 12px;
-    color: #CBD5E1;
+    color: #94A3B8;
 }
 
 .btn-arrow {
@@ -233,15 +233,15 @@
 
     <div class="home-actions">
 
-        <!-- AZUL -->
-        <button class="btn-primary-action">
+        <!-- Situación Normal -->
+        <button class="btn-primary-action" onclick="window.location.href='{{ route('consulta.documento') }}'">
             <span class="btn-left">
                 Revisar documento
             </span>
             <span class="btn-arrow">➜</span>
         </button>
 
-        <!-- ROJO -->
+        <!-- Urgencia -->
         <button class="btn-danger-action" onclick="window.location='{{ route('urgencia.documento') }}'">
             <span class="btn-left">
                 <span>Orientación urgente</span>

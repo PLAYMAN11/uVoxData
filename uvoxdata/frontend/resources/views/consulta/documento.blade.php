@@ -4,6 +4,7 @@
 
 {{-- ── Custom header ──────────────────────────────── --}}
 @section('header')
+
 <div class="lh-header w-100 d-flex align-items-center justify-content-between px-3">
 
     <a href="{{ route('home') }}" class="lh-back d-flex align-items-center">
@@ -12,7 +13,8 @@
         </svg>
     </a>
 
-    <span class="lh-title">Situación</span>
+    <span class="lh-title" > Situación
+    </span>
 
     <button class="lh-menu-btn" aria-label="Menú">
         <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
@@ -94,7 +96,7 @@
 }
 .lh-progress-fill {
     height: 100%;
-    background: #2F6FE8;
+    background: #2F77E2;
     border-radius: 99px;
 }
 
@@ -127,13 +129,13 @@
     width: 100%;
 }
 .lh-card:hover, .lh-card:active {
-    border-color: #2F6FE8;
+    border-color: #2F77E2;
     box-shadow: 0 0 0 3px rgba(47,111,232,.08);
-    background: #F7FAFF;
+    background: #E7EDFE;
 }
 .lh-card-icon {
     width: 48px; height: 48px;
-    background: #EEF3FD;
+    background: #E7EDFE;
     border-radius: 13px;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
@@ -141,7 +143,7 @@
 .lh-card-title {
     font-size: 15px;
     font-weight: 700;
-    color: #2563EB;
+    color: #2F77E2;
     margin: 0 0 2px;
     line-height: 1.2;
 }
@@ -161,7 +163,7 @@
     align-items: center;
     gap: 6px;
 }
-.lh-help:hover { color: #2563EB; }
+.lh-help:hover { color: #2F77E2; }
 </style>
 @endpush
 
@@ -249,14 +251,14 @@
     <div class="flex-grow-1"></div>
 
     {{-- Help link --}}
-    <div class="text-center py-3">
-        <a href="#" class="lh-help">
+    <div class="mt-auto d-flex justify-content-center py-3">
+        <a href="#" class="lh-help d-flex align-items-center gap-2">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <circle cx="9" cy="9" r="8" stroke="#64748B" stroke-width="1.5"/>
-                <path d="M9 13v-1" stroke="#64748B" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M6.5 7a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3" stroke="#64748B" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="9" cy="9" r="8" stroke="#7C3AED" stroke-width="1.5"/>
+                <path d="M9 13v-1" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M6.5 7a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            ¿Qué documentos puedo subir?
+            <span>¿Qué documentos puedo subir?</span>
         </a>
     </div>
 
