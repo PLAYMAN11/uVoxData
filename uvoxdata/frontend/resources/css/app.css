@@ -5,6 +5,96 @@
 ====================================================================== */
 
 /* ---------------------------------------------------------------------
+   0. RESET DE BASE + PHONE FRAME
+   En móvil real: pantalla completa nativa.
+   En desktop: frame centrado tipo iPhone.
+--------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── MÓVIL REAL (portrait, < 768px) ── */
+/* Sin phone-frame, sin fondo gris, layout nativo */
+.app-body {
+    background: #F8FAFC;
+    min-height: 100dvh;
+}
+
+.phone-frame {
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: #F8FAFC;
+}
+
+.app-shell {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100dvh;
+    background: #F8FAFC;
+}
+
+.app-header {
+    flex-shrink: 0;
+    height: 60px;
+    background: #F8FAFC;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.app-main {
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+    background: #F8FAFC;
+}
+
+.app-bottom {
+    flex-shrink: 0;
+    height: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── DESKTOP (>= 768px): frame decorativo tipo iPhone ── */
+@media (min-width: 768px) {
+    .app-body {
+        background: #E4E9F2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100dvh;
+    }
+
+    .phone-frame {
+        width: 390px;
+        height: 844px;
+        min-height: unset;
+        max-height: 844px;
+        border-radius: 44px;
+        box-shadow: 0 0 0 10px #1a1a2e, 0 30px 80px rgba(0,0,0,0.35);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .app-shell {
+        min-height: unset;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .app-main {
+        overflow-y: auto;
+    }
+}
+
+/* ---------------------------------------------------------------------
    1. SHELL CLARO (paginas internas tipo wizard / resultado)
    Se activa con: @section('shellClass', 'light-shell')
 --------------------------------------------------------------------- */
@@ -684,7 +774,52 @@
 }
 
 /* ---------------------------------------------------------------------
-   9. ANIMACIONES
+   9. FORMULARIO DE DESCRIPCIÓN (nd-*)
+--------------------------------------------------------------------- */
+
+.nd-textarea {
+    width: 100%;
+    min-height: 160px;
+    border: 1.5px solid #D1DCF0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #1E293B;
+    background: #FAFBFF;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    line-height: 1.6;
+    box-sizing: border-box;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.nd-textarea::placeholder { color: #94A3B8; }
+
+.nd-textarea:focus {
+    border-color: #2F6FE8;
+    box-shadow: 0 0 0 3px rgba(47,111,232,.1);
+    background: #FFFFFF;
+}
+
+.nd-btn-enviar {
+    width: 100%;
+    background: #5FA7E8;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 14px;
+    padding: 13px 28px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s, opacity .15s;
+}
+
+.nd-btn-enviar:hover    { background: #2F6FE8; }
+.nd-btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ---------------------------------------------------------------------
+   10. ANIMACIONES
 --------------------------------------------------------------------- */
 
 @keyframes ov-spin { to { transform: rotate(360deg); } }
@@ -697,7 +832,7 @@
 .ov-fade-in { animation: ov-fade-in .25s ease-out both; }
 
 /* ---------------------------------------------------------------------
-   10. HOME (arcos de fondo decorativos)
+   11. HOME (arcos de fondo decorativos)
 --------------------------------------------------------------------- */
 
 .home-bg-arcs {
@@ -738,7 +873,7 @@
 }
 
 /* ---------------------------------------------------------------------
-   11. CONTENEDOR LUPA (sprite canvas 5×5 o 6×6, fallback SVG, bob 5s; sin fondo)
+   12. CONTENEDOR LUPA (sprite canvas 5×5 o 6×6, fallback SVG, bob 5s; sin fondo)
 --------------------------------------------------------------------- */
 
 .lupa-stage {
@@ -813,7 +948,7 @@
 .lupa-stage.has-canvas > svg { visibility: hidden; }
 
 /* ---------------------------------------------------------------------
-   12. CONSULTA / “chat” — orientación con Lupin y cards (sin hilo ni input)
+   13. CONSULTA / “chat” — orientación con Lupin y cards (sin hilo ni input)
 --------------------------------------------------------------------- */
 
 .light-shell.chat-shell .app-main {

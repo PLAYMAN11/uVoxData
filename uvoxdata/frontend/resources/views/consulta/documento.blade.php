@@ -302,7 +302,7 @@
         formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
 
         try {
-            const res = await fetch('{{ route("consulta.subir") }}', { method: 'POST', body: formData });
+            const res = await fetch('/consulta/subir', { method: 'POST', body: formData });
             let body = null;
             const raw = await res.text();
             if (raw) {

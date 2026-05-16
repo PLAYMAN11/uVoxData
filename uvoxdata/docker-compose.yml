@@ -8,6 +8,7 @@ services:
       - APP_DEBUG=true
       - APP_KEY=base64:v2Y/RPBQ6J/xDnTYoIuCZnZCptOOZhPOjC9yY30wvzI=
       - APP_URL=http://localhost:8000
+      - ASSET_URL=/
       - BACKEND_URL=http://backend:8001
       - SESSION_DRIVER=file
     depends_on:

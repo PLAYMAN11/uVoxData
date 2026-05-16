@@ -36,9 +36,7 @@ Route::post('/consulta/describir', [ConsultaController::class, 'describirOrienta
 Route::view('/consulta/procesando', 'procesando')->name('consulta.procesando');
 
 // Resultado del análisis
-Route::get('/consulta/resultado', function () {
-    return view('resultado');
-})->name('consulta.resultado');
+Route::view('/consulta/resultado', 'consulta.resultado')->name('consulta.resultado');
 
 // Orientación por temas + chat conversacional (POST /consulta vía api.js)
 Route::view('/consulta/chat', 'chat')->name('consulta.chat');

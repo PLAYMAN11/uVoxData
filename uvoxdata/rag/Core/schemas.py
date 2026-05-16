@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import BaseModel
 
 
@@ -10,7 +10,6 @@ class Status(BaseModel):
 
 class DocumentInfo(BaseModel):
     type: str
-    expedient: str
     authority: str
 
 

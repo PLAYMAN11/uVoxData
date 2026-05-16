@@ -43,49 +43,6 @@
 
 </div>
 
-@push('styles')
-<style>
-.nd-textarea {
-    width: 100%;
-    min-height: 160px;
-    border: 1.5px solid #D1DCF0;
-    border-radius: 14px;
-    padding: 14px 16px;
-    font-size: 14px;
-    color: #1E293B;
-    background: #FAFBFF;
-    resize: none;
-    outline: none;
-    font-family: inherit;
-    line-height: 1.6;
-    transition: border-color .15s, box-shadow .15s;
-}
-
-.nd-textarea::placeholder { color: #94A3B8; }
-
-.nd-textarea:focus {
-    border-color: #2F6FE8;
-    box-shadow: 0 0 0 3px rgba(47,111,232,.1);
-    background: #FFFFFF;
-}
-
-.nd-btn-enviar {
-    background: #5FA7E8;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 14px;
-    padding: 12px 28px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background .15s, opacity .15s;
-}
-
-.nd-btn-enviar:hover { background: #2F6FE8; }
-.nd-btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
-</style>
-@endpush
-
 @push('scripts')
 <script>
 document.getElementById('form-describir').addEventListener('submit', async function (e) {
@@ -119,7 +76,7 @@ document.getElementById('form-describir').addEventListener('submit', async funct
         if (!navigator.onLine) {
             data = await usarOffline();
         } else {
-            const res = await fetch('{{ route("consulta.describir") }}', {
+            const res = await fetch('/consulta/describir', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

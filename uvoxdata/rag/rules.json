@@ -2,9 +2,21 @@
   {
     "doc_type": "cedula_notificacion",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Puede ser: fecha absoluta (ej. '20 de mayo de 2026'), plazo relativo completo (ej. '4 días hábiles desde la notificación'), o forma abreviada (ej. 'cuatro útiles', 'tres hábiles', 'cuatro naturales'). Las formas abreviadas como 'cuatro útiles' equivalen a 'cuatro días hábiles'. Todos estos son válidos. Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
+      "fecha_limite": "Extraer del documento y normalizar al español completo. Ejemplos de normalización: 'cuatro útiles' → '4 días hábiles', 'tres hábiles' → '3 días hábiles', 'cuatro naturales' → '4 días naturales', 'cinco útiles' → '5 días hábiles'. Si hay fecha absoluta (ej. '20 de mayo de 2026'), usarla directamente. Si hay plazo relativo, escribirlo completo en español (ej. '4 días hábiles desde la notificación'). Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_emisora": "Extraer de la firma o membrete del documento."
+    },
+    "orientacion_ciudadana": {
+      "why_you_received_this": "Fuiste notificado porque el Tribunal emitió un acuerdo, resolución o actuación en un expediente en que eres parte o interesado. La cédula es el instrumento oficial para darte a conocer esa determinación.",
+      "risk_if_no_action": "Si no atiendes la notificación, el procedimiento continuará sin tu participación. Podrías perder el derecho a impugnar la resolución, presentar pruebas o alegatos dentro del plazo legal, lo que puede afectar el resultado del expediente en tu contra.",
+      "what_you_can_do_now": [
+        "Lee con detenimiento la cédula e identifica el número de expediente, el acuerdo referido y la autoridad que lo emite.",
+        "Determina si la resolución te afecta directamente y si necesitas responder o impugnar.",
+        "Consulta a un abogado o asesor especialista en derecho electoral a la brevedad posible.",
+        "Verifica el plazo para interponer un medio de impugnación (recurso de apelación, juicio ciudadano, etc.) si no estás de acuerdo.",
+        "Guarda una copia de la cédula: es tu comprobante oficial de notificación.",
+        "Acude o contacta al Tribunal Estatal Electoral del Estado de Chihuahua para conocer el estado completo del expediente."
+      ]
     },
     "autoridades_validas": ["TEPJF", "INE", "IECM", "Tribunal Electoral del Estado de Chihuahua", "IEE Chihuahua"],
     "procesos_validos": ["medio_impugnacion", "juicio_ciudadano", "recurso_apelacion", "recurso_revision"],
@@ -112,7 +124,7 @@
   {
     "doc_type": "juicio_ciudadano",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Puede ser: fecha absoluta (ej. '20 de mayo de 2026'), plazo relativo completo (ej. '4 días hábiles desde la notificación'), o forma abreviada (ej. 'cuatro útiles', 'tres hábiles', 'cuatro naturales'). Las formas abreviadas como 'cuatro útiles' equivalen a 'cuatro días hábiles'. Todos estos son válidos. Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
+      "fecha_limite": "Extraer del documento y normalizar al español completo. Ejemplos de normalización: 'cuatro útiles' → '4 días hábiles', 'tres hábiles' → '3 días hábiles', 'cuatro naturales' → '4 días naturales', 'cinco útiles' → '5 días hábiles'. Si hay fecha absoluta (ej. '20 de mayo de 2026'), usarla directamente. Si hay plazo relativo, escribirlo completo en español (ej. '4 días hábiles desde la notificación'). Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_responsable": "Extraer la autoridad contra la que se promueve el juicio.",
       "acto_impugnado": "Extraer el acto o resolución que se impugna."
@@ -139,7 +151,7 @@
   {
     "doc_type": "recurso_apelacion",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Puede ser: fecha absoluta (ej. '20 de mayo de 2026'), plazo relativo completo (ej. '4 días hábiles desde la notificación'), o forma abreviada (ej. 'cuatro útiles', 'tres hábiles', 'cuatro naturales'). Las formas abreviadas como 'cuatro útiles' equivalen a 'cuatro días hábiles'. Todos estos son válidos. Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
+      "fecha_limite": "Extraer del documento y normalizar al español completo. Ejemplos de normalización: 'cuatro útiles' → '4 días hábiles', 'tres hábiles' → '3 días hábiles', 'cuatro naturales' → '4 días naturales', 'cinco útiles' → '5 días hábiles'. Si hay fecha absoluta (ej. '20 de mayo de 2026'), usarla directamente. Si hay plazo relativo, escribirlo completo en español (ej. '4 días hábiles desde la notificación'). Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_responsable": "Extraer la autoridad que emitió el acto impugnado.",
       "acto_impugnado": "Extraer el acto o resolución que se impugna."
@@ -166,7 +178,7 @@
   {
     "doc_type": "recurso_revision",
     "extraccion_requerida": {
-      "fecha_limite": "Extraer del documento. Puede ser: fecha absoluta (ej. '20 de mayo de 2026'), plazo relativo completo (ej. '4 días hábiles desde la notificación'), o forma abreviada (ej. 'cuatro útiles', 'tres hábiles', 'cuatro naturales'). Las formas abreviadas como 'cuatro útiles' equivalen a 'cuatro días hábiles'. Todos estos son válidos. Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
+      "fecha_limite": "Extraer del documento y normalizar al español completo. Ejemplos de normalización: 'cuatro útiles' → '4 días hábiles', 'tres hábiles' → '3 días hábiles', 'cuatro naturales' → '4 días naturales', 'cinco útiles' → '5 días hábiles'. Si hay fecha absoluta (ej. '20 de mayo de 2026'), usarla directamente. Si hay plazo relativo, escribirlo completo en español (ej. '4 días hábiles desde la notificación'). Solo usar 'No se encontró' si no hay absolutamente ninguna mención de fecha, días o plazo en el documento.",
       "expediente": "Extraer del encabezado o membrete del documento.",
       "autoridad_responsable": "Extraer la autoridad que emitió el acto impugnado.",
       "acto_impugnado": "Extraer el acto o resolución que se impugna."

@@ -125,8 +125,8 @@
 <script>
 (function () {
     const cards = document.querySelectorAll('[data-card="true"]');
-    const setRoute = @json(route('emergencia.set'));
-    const next = @json(route('consulta.documento'));
+    const setRoute = '/emergencia/set';
+    const next = '/consulta/documento';
     const csrf = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
     cards.forEach(card => {

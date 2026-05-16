@@ -19,14 +19,10 @@
 
     <span class="lh-title {{ $titleClass }}">{{ $title }}</span>
 
-    @if ($showMenu)
-        <button type="button" class="lh-menu-btn" aria-label="Menú">
-            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
-                <path d="M1 1h16M1 7h16M1 13h16" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-        </button>
-    @else
-        <span style="width:38px;"></span>
-    @endif
+    <a href="{{ route('home') }}" class="lh-menu-btn" aria-label="Inicio">
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+            <path d="M1 1h16M1 7h16M1 13h16" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+    </a>
 
 </div>

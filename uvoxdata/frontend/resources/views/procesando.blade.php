@@ -114,8 +114,8 @@
 /* Anillo */
 .ring-wrap {
     position: relative;
-    width: 140px;
-    height: 140px;
+    width: 220px;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,8 +125,8 @@
 .ring-svg {
     position: absolute;
     inset: 0;
-    width: 140px;
-    height: 140px;
+    width: 220px;
+    height: 220px;
     animation: ring-rotate 2.4s linear infinite;
     transform-origin: center;
 }
@@ -165,8 +165,8 @@
 }
 
 .ring-inner {
-    width: clamp(104px, 30vmin, 132px);
-    height: clamp(104px, 30vmin, 132px);
+    width: clamp(160px, 44vmin, 200px);
+    height: clamp(160px, 44vmin, 200px);
     background: transparent;
     border-radius: 50%;
     display: flex;
@@ -330,8 +330,8 @@ function applyProgress(pct) {
 // Simulación local del avance — la respuesta real ya está en sessionStorage
 // desde el paso anterior (documento o descripción). Damos ~3.2s de "calma"
 // y luego redirigimos a resultado.
-const REDIRECT_TARGET = '{{ route('consulta.resultado') }}';
-const HOME = '{{ route('home') }}';
+const REDIRECT_TARGET = '/consulta/resultado';
+const HOME = '/';
 
 const hasResult = !!sessionStorage.getItem('rag_resultado');
 
