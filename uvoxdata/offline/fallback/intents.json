@@ -34,6 +34,20 @@
       "priority": 0,
       "keywords": ["en linea", "en línea", "internet", "portal", "consultar en linea"],
       "aliases": []
+    },
+    {
+      "id": "intent.appeal",
+      "label": "Recurso de apelación",
+      "priority": 5,
+      "keywords": ["recurso de apelacion", "recurso de apelación", "rap", "apelar al ine", "apelacion electoral", "apelación electoral"],
+      "aliases": ["apelacion", "apelación"]
+    },
+    {
+      "id": "intent.jrc",
+      "label": "Juicio de revisión constitucional",
+      "priority": 6,
+      "keywords": ["juicio de revision constitucional", "juicio de revisión constitucional", "jrc", "revision constitucional electoral", "revisión constitucional electoral"],
+      "aliases": ["revision constitucional", "revisión constitucional"]
     }
   ]
 }

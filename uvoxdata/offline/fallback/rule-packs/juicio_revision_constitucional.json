@@ -1,0 +1,22 @@
+{
+  "id": "juicio_revision_constitucional",
+  "doc_type": "acto_o_resolucion_autoridad_local",
+  "proceso": "juicio_revision_constitucional",
+  "reglas": {
+    "plazo_dias": 4,
+    "inicio_plazo": "dia_siguiente_notificacion",
+    "fundamento": "Articulos 86 a 94 LGSMIME",
+    "consecuencia_fuera_plazo": "acto_firme",
+    "legitimacion": "solo_partidos_politicos"
+  },
+  "autoridad_default": "Sala Superior del Tribunal Electoral",
+  "ruta_default": "Promover juicio de revision constitucional electoral",
+  "tramite": {
+    "tipo": "presencial",
+    "descripcion": "Presentar el juicio ante la autoridad responsable para su remision al tribunal electoral competente"
+  },
+  "links_oficiales": [
+    "https://www.te.gob.mx",
+    "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGSMIME.pdf"
+  ]
+}
