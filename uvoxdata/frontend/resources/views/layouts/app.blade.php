@@ -2,25 +2,50 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>uVoxData — Consulta Electoral</title>
+
+    <title>OrientaVox</title>
+
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#1a365d">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Bootstrap (opcional pero válido en tu caso) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- VITE -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <header class="bg-blue-900 text-white px-6 py-4 shadow">
-        <h1 class="text-xl font-semibold">uVoxData · Consulta Electoral TEE Chihuahua</h1>
-    </header>
 
-    <main class="max-w-4xl mx-auto p-6">
-        @include('consulta.partials.offline-banner')
-        @yield('content')
-    </main>
+<body class="app-body">
 
-    <footer class="text-center text-xs text-gray-400 py-4">
-        TEE Chihuahua &copy; {{ date('Y') }}
-    </footer>
+    <!-- FRAME TIPO IPHONE -->
+    <div class="phone-frame">
+
+        <div class="app-shell @yield('shellClass')">
+
+            <header class="app-header">
+
+
+                @yield('header', 'OrientaVox')
+            </header>
+
+            <main class="app-main">
+                @yield('content')
+            </main>
+
+            <nav class="app-bottom"></nav>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS (opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @stack('scripts')
+
 </body>
 </html>

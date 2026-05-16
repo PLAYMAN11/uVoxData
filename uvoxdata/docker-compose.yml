@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   frontend:
     build: ./frontend
@@ -15,8 +13,9 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./frontend/storage:/var/www/html/storage
-      - ./frontend/bootstrap/cache:/var/www/html/bootstrap/cache
+        - ./frontend:/var/www/html
+        - frontend_vendor:/var/www/html/vendor
+        - frontend_node:/var/www/html/node_modules
 
   backend:
     build: ./backend
@@ -44,3 +43,7 @@ services:
 networks:
   default:
     name: uvoxdata_network
+
+volumes:
+  frontend_vendor:
+  frontend_node:
