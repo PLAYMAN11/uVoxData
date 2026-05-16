@@ -33,14 +33,14 @@ async def subir_documento(archivo: UploadFile = File(...)):
         if not texto:
             raise HTTPException(status_code=422, detail="No se pudo extraer texto del archivo.")
 
-        async with httpx.AsyncClient(timeout=60) as client:
+        async with httpx.AsyncClient(timeout=120) as client:
             resp = await client.post(
-                f"{RAG_URL}/ingest",
-                json={"texto": texto, "fuente": archivo.filename},
+                f"{RAG_URL}/search",
+                json={"query": texto},
             )
 
         if resp.is_error:
-            raise HTTPException(status_code=502, detail="Error al indexar el documento en el RAG.")
+            raise HTTPException(status_code=502, detail="Error al consultar el RAG.")
 
         return resp.json()
 
