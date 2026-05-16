@@ -15,6 +15,7 @@
 
     <!-- VITE -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 
 <body class="app-body">
@@ -22,10 +23,12 @@
     <!-- FRAME TIPO IPHONE -->
     <div class="phone-frame">
 
-        <div class="app-shell">
+        <div class="app-shell @yield('shellClass')">
 
             <header class="app-header">
-                <h1>Orienta<span>Vox</span></h1>
+
+
+                @yield('header', 'OrientaVox')
             </header>
 
             <main class="app-main">
@@ -40,6 +43,8 @@
 
     <!-- Bootstrap JS (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @stack('scripts')
 
 </body>
 </html>

@@ -33,13 +33,16 @@ class ConsultaController extends Controller
     public function subirDocumento(Request $request)
     {
         $request->validate([
-            'documento' => 'required|file|mimes:pdf|max:10240',
+            'archivo' => 'required|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
         ]);
 
-        $respuesta = Http::timeout(60)->attach(
+        $file = $request->file('archivo');
+
+        $respuesta = Http::timeout(90)->attach(
             'archivo',
-            file_get_contents($request->file('documento')->getRealPath()),
-            $request->file('documento')->getClientOriginalName()
+            file_get_contents($file->getRealPath()),
+            $file->getClientOriginalName(),
+            ['Content-Type' => $file->getMimeType()]
         )->post(config('services.backend.url') . '/documento');
 
         if ($respuesta->failed()) {
