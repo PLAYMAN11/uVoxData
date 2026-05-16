@@ -39,7 +39,9 @@ VALORES POR DEFECTO cuando no encuentres la información ni en la consulta ni en
 - Cualquier otro campo desconocido: "No se encontró"
 
 IMPORTANTE: Extrae información tanto de la consulta del usuario como del contexto legal recuperado.
-Si el usuario menciona una fecha, expediente o autoridad en su consulta, úsala directamente.
+- Si se menciona una fecha absoluta (ej. "20 de mayo"), úsala directamente.
+- Si se menciona un plazo relativo (ej. "4 días hábiles", "3 días naturales desde la notificación"), captúralo TAL CUAL en remaining_time. NO lo marques como "No se encontró".
+- Solo usa "No se encontró" si no hay ninguna mención de fecha ni plazo en ninguna parte del documento o consulta.
 
 Contexto legal recuperado:
 {context}
